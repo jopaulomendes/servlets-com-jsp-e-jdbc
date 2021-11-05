@@ -10,7 +10,7 @@
 
 	<h1>Bem vindo ao curso Servlets com JSP e JDBC com SQL e Java</h1>
 	
-	<form action="receber-nome.jsp">
+	<form action="ServletLogin" method="POST">
 		<input name="nome">
 		<input name="idade">
 		<input type="submit" value="Enviar">
