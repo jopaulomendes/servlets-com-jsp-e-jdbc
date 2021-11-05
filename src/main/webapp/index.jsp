@@ -10,9 +10,11 @@
 
 	<h1>Bem vindo ao curso Servlets com JSP e JDBC com SQL e Java</h1>
 	
-	<%
-	out.print("João Paulo da Mata Mendes");
-	%>
+	<form action="receber-nome.jsp">
+		<input name="nome">
+		<input name="idade">
+		<input type="submit" value="Enviar">
+	</form>
 
 </body>
 </html>
