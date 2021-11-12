@@ -40,15 +40,17 @@
 	
 	<h4>${msg}</h4>
 	
-	<form class="row g-3" action="ServletLogin" method="POST">
+	<form class="row g-3 needs-validation" action="ServletLogin" method="POST" novalidate>
 		<input type="hidden" value="<%= request.getParameter("url") %>" name="url">
-	
+
+		<div class="invalid-feedback">Usuário!</div>
 		<div class="mb-3">
-			<input name="login" type="text" placeholder="Usuário"> 
-		</div>
+			<input class="form-control" name="login" type="text" placeholder="Usuário" required="required"> 
+		</div> 
 		
+		<div class="invalid-feedback">Senha obrigatória!</div>
 		<div class="mb-3">
-			<input name="senha" type="password" placeholder="Senha"> 
+			<input class="form-control" name="senha" type="password" placeholder="Senha" required="required"> 
 		</div>
 		
 		<div class="col-12">
@@ -60,5 +62,27 @@
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
 		crossorigin="anonymous"></script>
+
+	<script type="text/javascript">
+		// Example starter JavaScript for disabling form submissions if there are invalid fields
+		(function() {
+			'use strict'
+
+			// Fetch all the forms we want to apply custom Bootstrap validation styles to
+			var forms = document.querySelectorAll('.needs-validation')
+
+			// Loop over them and prevent submission
+			Array.prototype.slice.call(forms).forEach(function(form) {
+				form.addEventListener('submit', function(event) {
+					if (!form.checkValidity()) {
+						event.preventDefault()
+						event.stopPropagation()
+					}
+
+					form.classList.add('was-validated')
+				}, false)
+			})
+		})()
+	</script>
 </body>
 </html>
