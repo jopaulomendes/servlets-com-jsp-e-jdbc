@@ -19,8 +19,8 @@
 	form {
 	position: absolute;
 	top: 20%;
-	left: 45%;
-	right: 45%;
+	left: 40%;
+	right: 40%;
 }
 
 	h1 {
@@ -29,7 +29,13 @@
 	
 	h4 {
 		text-align: center;
-		color: red;
+		position: absolute;
+		left: 40%;
+		right: 40%;
+	    color: #842029;
+	    background-color: #f8d7da;
+	    border-color: #f5c2c7;
+}
 	}
 </style>
 
@@ -44,7 +50,7 @@
 		<input type="hidden" value="<%= request.getParameter("url") %>" name="url">
 
 		<div class="invalid-feedback">Usuário!</div>
-		<div class="mb-3">
+		<div class="col-12">
 			<input class="form-control" name="login" type="text" placeholder="Usuário" required="required"> 
 		</div> 
 		
