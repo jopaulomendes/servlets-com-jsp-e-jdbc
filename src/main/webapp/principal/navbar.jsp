@@ -117,7 +117,7 @@
                                       </a>
                                   </li>
                                   <li class="waves-effect waves-light">
-                                      <a href="ServletLogin?acao=sair">
+                                      <a href="<%=request.getContextPath() %>/ServletLogin?acao=sair">
                                           <i class="ti-layout-sidebar-left"></i> Sair
                                       </a>
                                   </li>

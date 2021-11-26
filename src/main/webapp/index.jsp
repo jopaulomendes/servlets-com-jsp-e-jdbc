@@ -46,7 +46,7 @@
 	
 	<h4>${msg}</h4>
 	
-	<form class="row g-3 needs-validation" action="ServletLogin" method="POST" novalidate>
+	<form class="row g-3 needs-validation" action="<%=request.getContextPath() %>/ServletLogin" method="POST" novalidate>
 		<input type="hidden" value="<%= request.getParameter("url") %>" name="url">
 
 		<div class="invalid-feedback">Usuário!</div>
