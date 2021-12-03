@@ -39,7 +39,7 @@ public class ServletUsuarioController extends HttpServlet {
 			modelLogin.setLogin(login);
 			modelLogin.setSenha(senha);
 			
-			usuarioRepository.salvar(modelLogin);
+			modelLogin = usuarioRepository.salvar(modelLogin);
 			
 			request.setAttribute("msg", "Usuário salvo com sucesso!");
 			request.setAttribute("modelLogin", modelLogin); // mantém os dados na tela
