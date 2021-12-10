@@ -26,6 +26,8 @@ public class ServletUsuarioController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
+			String msg =  "Usuário salvo com sucesso!";
+			
 			String id = request.getParameter("id");
 			String nome = request.getParameter("nome");
 			String email = request.getParameter("email");
@@ -39,9 +41,13 @@ public class ServletUsuarioController extends HttpServlet {
 			modelLogin.setLogin(login);
 			modelLogin.setSenha(senha);
 			
+			if (usuarioRepository.validarLogin(modelLogin.getLogin()) && modelLogin.getId() == null ) {
+				msg = "Login em uso";
+			}
+			
 			modelLogin = usuarioRepository.salvar(modelLogin);
 			
-			request.setAttribute("msg", "Usuário salvo com sucesso!");
+			request.setAttribute("msg", msg);
 			request.setAttribute("modelLogin", modelLogin); // mantém os dados na tela
 			request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
 		

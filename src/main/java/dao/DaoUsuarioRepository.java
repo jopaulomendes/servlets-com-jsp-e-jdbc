@@ -3,6 +3,7 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import connection.SingleConnectionBanco;
 import model.ModelLogin;
@@ -33,7 +34,7 @@ public class DaoUsuarioRepository {
 	public ModelLogin pesquisarLogin(String login) throws Exception {
 		ModelLogin modelLogin = new ModelLogin();
 		
-		String sql = "select * from model_login ml where lower(login) = lower('?');";
+		String sql = "select * from model_login ml where lower(login) = lower('?');";   
 		PreparedStatement statement = connection.prepareStatement(sql);		
 		statement.setString(1, login);
 		
@@ -47,7 +48,16 @@ public class DaoUsuarioRepository {
 			modelLogin.setSenha(resultSet.getString("senha"));
 		}
 		
-		return modelLogin;	
+		return modelLogin;			
+	}
+	
+	public boolean validarLogin(String login) throws Exception {
+		String sql = "select count(1) > 0 as existe from model_login ml where lower(login) = lower('"+login+"');";
+		PreparedStatement statement = connection.prepareStatement(sql);		
+		ResultSet resultSet = statement.executeQuery();
 		
+		resultSet.next();
+		
+		return false;
 	}
 }
