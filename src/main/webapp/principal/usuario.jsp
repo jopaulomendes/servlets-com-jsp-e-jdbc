@@ -45,11 +45,11 @@
                                                         <h2>Cadastro de usuário</h2>
                                                     </div>
                                                     <div class="card-block">
-                                                        <form class="form-material" action="<%= request.getContextPath() %>/ServletUsuarioController" method="post">
+                                                        <form class="form-material" action="<%= request.getContextPath() %>/ServletUsuarioController" method="post" id="formUser">
                                                         	<div class="form-group form-default">
-                                                                <input type="text" name="id" id="id" class="form-control" readonly="readonly" value="${modelLogin.id}">
-                                                                <span class="form-bar"></span>
-                                                                <label class="float-label">Código</label>
+                                                                <input type="hidden" name="id" id="id" class="form-control" readonly="readonly" value="${modelLogin.id}">
+<!--                                                                 <span class="form-bar"></span> -->
+<!--                                                                 <label class="float-label">Código</label> -->
                                                             </div>
                                                             <div class="form-group form-default">
                                                                 <input type="text" name="nome" id="nome" class="form-control"  value="${modelLogin.nome}" required="required">
@@ -73,6 +73,7 @@
                                                             </div>
                                                       		
                                                       		<button class="btn btn-success waves-effect waves-light">Salvar</button>
+                                                      		<button type="button" onclick="limparForm()" class="btn btn-primary waves-effect waves-light">Novo</button>
                                                         </form>
                                                     </div>
                                                 </div>
@@ -91,6 +92,15 @@
     </div>
     
     <jsp:include page="javascript.jsp"></jsp:include>
+    
+    <script type="text/javascript">
+    	function limparForm() {
+			var elementos = document.getElementById("formUser").elements;
+			for (var p = 0; p < elementos.length; p++) {
+				elementos[p].value = '';
+			}
+		}
+    </script>
 </body>
 
 </html>
