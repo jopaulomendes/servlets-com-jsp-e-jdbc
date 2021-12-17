@@ -41,11 +41,17 @@ public class ServletUsuarioController extends HttpServlet {
 			modelLogin.setLogin(login);
 			modelLogin.setSenha(senha);
 			
-			if (usuarioRepository.validarLogin(modelLogin.getLogin()) && modelLogin.getId() == null ) {
+			if (usuarioRepository.validarLogin(modelLogin.getLogin()) && modelLogin.getId() == null) {
 				msg = "Login em uso";
+			} else {
+//				if (modelLogin.isNovo()) {
+//					msg = "Usuário salvo com sucesso";
+//				} else {
+//					msg = "Usuário editado com sucesso";
+//				}
+				modelLogin = usuarioRepository.salvar(modelLogin);
 			}
 			
-			modelLogin = usuarioRepository.salvar(modelLogin);
 			
 			request.setAttribute("msg", msg);
 			request.setAttribute("modelLogin", modelLogin); // mantém os dados na tela

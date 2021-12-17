@@ -3,7 +3,6 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import connection.SingleConnectionBanco;
 import model.ModelLogin;
@@ -17,26 +16,43 @@ public class DaoUsuarioRepository {
 	}
 	
 	public ModelLogin salvar(ModelLogin modelLogin) throws Exception {
-		String sql = "INSERT INTO model_login(login, senha, nome, email) VALUES(?,?,?,?);";
-		PreparedStatement statement = connection.prepareStatement(sql);
 		
-		statement.setString(1, modelLogin.getLogin());
-		statement.setString(2, modelLogin.getSenha());
-		statement.setString(3, modelLogin.getNome());
-		statement.setString(4, modelLogin.getEmail());
-		
-		statement.execute();
-		connection.commit();
+		if (modelLogin.isNovo()) {
+			
+			String sql = "insert into model_login(login, senha, nome, email) VALUES(?, ?, ?, ?);";
+			
+			PreparedStatement statement = connection.prepareStatement(sql);			
+			statement.setString(1, modelLogin.getLogin());
+			statement.setString(2, modelLogin.getSenha());
+			statement.setString(3, modelLogin.getNome());
+			statement.setString(4, modelLogin.getEmail());
+			
+			statement.execute();
+			connection.commit();
+			
+		} else {
+			
+			String sql = "update model_login set login=?, senha=?, nome=?, email=? where id = "+modelLogin.getId()+";";
+			
+			PreparedStatement statement = connection.prepareStatement(sql);			
+			statement.setString(1, modelLogin.getLogin());
+			statement.setString(2, modelLogin.getSenha());
+			statement.setString(3, modelLogin.getNome());
+			statement.setString(4, modelLogin.getEmail());
+			
+			statement.executeUpdate();
+			connection.commit();
+		}		
 		
 		return this.pesquisarLogin(modelLogin.getLogin());
 	}
 	
-	public ModelLogin pesquisarLogin(String login) throws Exception {
+	public ModelLogin pesquisarLogin(String login) throws Exception {	
 		ModelLogin modelLogin = new ModelLogin();
 		
-		String sql = "select * from model_login ml where lower(login) = lower('?');";   
+		String sql = "select * from model_login where lower(login) = lower('"+login+"');";   
+		
 		PreparedStatement statement = connection.prepareStatement(sql);		
-		statement.setString(1, login);
 		
 		ResultSet resultSet = statement.executeQuery();
 		
@@ -52,12 +68,13 @@ public class DaoUsuarioRepository {
 	}
 	
 	public boolean validarLogin(String login) throws Exception {
-		String sql = "select count(1) > 0 as existe from model_login ml where lower(login) = lower('"+login+"');";
+		String sql = "select count(1) > 0 as existe from model_login where lower(login) = lower('"+login+"');";
+		
 		PreparedStatement statement = connection.prepareStatement(sql);		
 		ResultSet resultSet = statement.executeQuery();
 		
 		resultSet.next();
 		
-		return false;
+		return resultSet.getBoolean("existe");
 	}
 }
