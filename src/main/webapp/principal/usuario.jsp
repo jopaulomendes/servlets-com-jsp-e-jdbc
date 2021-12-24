@@ -106,9 +106,12 @@
 		}
     	
     	function excluir() {
+    		if (confirm('Deseja realmente excluir esse usuário?')) {
     		document.getElementById("formUser").method = 'get';
     		document.getElementById("acao").value = 'excluir';
-    		document.getElementById("formUser").submit();
+    		document.getElementById("formUser").submit();				
+			}
+    		
 		}
     </script>
 </body>
