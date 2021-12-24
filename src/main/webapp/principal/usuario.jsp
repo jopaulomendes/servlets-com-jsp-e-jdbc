@@ -46,6 +46,9 @@
                                                     </div>
                                                     <div class="card-block">
                                                         <form class="form-material" action="<%= request.getContextPath() %>/ServletUsuarioController" method="post" id="formUser">
+                                                        
+                                                        	<input type="hidden" name="acao" id="acao" value="">
+                                                        
                                                         	<div class="form-group form-default">
                                                                 <input type="hidden" name="id" id="id" class="form-control" readonly="readonly" value="${modelLogin.id}">
 <!--                                                                 <span class="form-bar"></span> -->
@@ -74,6 +77,7 @@
                                                       		
                                                       		<button class="btn btn-success waves-effect waves-light">Salvar</button>
                                                       		<button type="button" onclick="limparForm()" class="btn btn-primary waves-effect waves-light">Novo</button>
+                                                      		<button type="button" onclick="excluir()" class="btn btn-danger waves-effect waves-light">Excluir</button>
                                                         </form>
                                                     </div>
                                                 </div>
@@ -99,6 +103,12 @@
 			for (var p = 0; p < elementos.length; p++) {
 				elementos[p].value = '';
 			}
+		}
+    	
+    	function excluir() {
+    		document.getElementById("formUser").method = 'get';
+    		document.getElementById("acao").value = 'excluir';
+    		document.getElementById("formUser").submit();
 		}
     </script>
 </body>
