@@ -36,7 +36,7 @@
                                     <!-- Page-body start -->
                                     <div class="page-body">
                                     
-                                    	<span>${msg}</span>
+                                    	<span id="msg" class="card-block success-breadcrumb">${msg}</span>
                                     
                                         <div class="row"">
                                             <div class="col-md-10">
@@ -77,7 +77,7 @@
                                                       		
                                                       		<button class="btn btn-success waves-effect waves-light">Salvar</button>
                                                       		<button type="button" onclick="limparForm()" class="btn btn-primary waves-effect waves-light">Novo</button>
-                                                      		<button type="button" onclick="excluir()" class="btn btn-danger waves-effect waves-light">Excluir</button>
+                                                      		<button type="button" onclick="excluirAjax()" class="btn btn-danger waves-effect waves-light">Excluir</button>
                                                         </form>
                                                     </div>
                                                 </div>
@@ -104,6 +104,26 @@
 				elementos[p].value = '';
 			}
 		}
+    	
+    	function excluirAjax() {
+    		if (confirm('Deseja realmente excluir esse usuário?')) {
+    			
+    			var urlAction = document.getElementById('formUser').action;
+    			var idUser = document.getElementById('id').value;
+    			
+    			$.ajax({
+    				method: "get",
+    				url: urlAction,
+    				data: "id=" + idUser + '&acao=excluirajax',
+    				success: function (response){
+    					limparForm();
+    					document.getElementById('msg').textContent = response;
+    				}
+    			}).fail(function(xhr, status, errorThrown){
+    				alert('Erro ao deletar usuário: ' + xhr.responseText);
+    			});
+    		}
+    	}
     	
     	function excluir() {
     		if (confirm('Deseja realmente excluir esse usuário?')) {

@@ -26,12 +26,23 @@ public class ServletUsuarioController extends HttpServlet {
 			String acao = request.getParameter("acao");
 
 			if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("excluir")) {
+				
 				String idUser = request.getParameter("id");
 				usuarioRepository.excluir(idUser);
 				request.setAttribute("msg", "Usuário excluído com sucesso!");
+				
+				request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
+			
+			} else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("excluirajax")) {
+				
+				String idUser = request.getParameter("id");
+				usuarioRepository.excluir(idUser);
+				response.getWriter().write("Usuário excluído com sucesso!");
+			
+			}else {
+				request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
 			}
 			
-			request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
