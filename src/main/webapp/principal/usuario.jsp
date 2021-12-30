@@ -160,10 +160,23 @@
 	<script type="text/javascript">
 		
 	    function pesquisarUsuario() {
+	    	
 	    	var pesquisar = document.getElementById('pesquisar').value;
 	    	
 	    	if (pesquisar != null && pesquisar != '' && pesquisar.trim() != '') {
-				alert(pesquisar);
+	    		
+	    		var urlAction = document.getElementById('formUser').action;
+				
+	    		$.ajax({
+					method : "get",
+					url : urlAction,
+					data : "pesquisar=" + pesquisar + '&acao=pesquisar',
+					success : function(response) {
+						
+					}
+				}).fail(function(xhr, status, errorThrown) {
+					alert('Erro ao pesquisar usuário: ' + xhr.responseText);
+				});
 			}
 	    }
 	
