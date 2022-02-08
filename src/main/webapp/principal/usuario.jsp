@@ -91,7 +91,8 @@
 															<!-- Button trigger modal -->
 															<button type="button" class="btn btn-info"
 																data-toggle="modal" data-target="#exampleModalCenter">
-																Pesquisar</button>
+																Pesquisar
+															</button>
 														</form>
 													</div>
 												</div>
@@ -125,61 +126,74 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				
+
 				<div class="modal-body">
 					<div class="input-group mb-3">
-						<input type="text" class="form-control"
-							placeholder="Pesquisar..."
-							aria-label="pesquisar" id="pesquisar" aria-describedby="basic-addon2">
-							<button type="button" class="btn btn-primary" onclick="pesquisarUsuario();">Pesquisar</button>
+						<input type="text" class="form-control" placeholder="Pesquisar..."
+							aria-label="pesquisar" id="pesquisar"
+							aria-describedby="basic-addon2">
+						<button type="button" class="btn btn-primary"
+							onclick="pesquisarUsuario();">Pesquisar</button>
 					</div>
 				</div>
 
-				<table class="table table-bordered">
-					<thead>
-						<tr>
-							<th scope="col">Código</th>
-							<th scope="col">Nome</th>
-							<th scope="col">Detalhar</th>
-						</tr>
-					</thead>
-					<tbody>
-						
-					</tbody>
-				</table>
+				<div style="height: 300px; overflow: scroll;">
+					<table class="table table-bordered" id="tabelaresultados">
+						<thead>
+							<tr>
+								<th scope="col">Código</th>
+								<th scope="col">Nome</th>
+								<th scope="col">Detalhar</th>
+							</tr>
+						</thead>
+						<tbody>
+	
+						</tbody>
+					</table>
+				</div>
+				<span id="totalResultados"></span>
 
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
-						data-dismiss="modal">Fechar
-					</button>					
+						data-dismiss="modal">Fechar</button>
 				</div>
 			</div>
 		</div>
 	</div>
 
 	<script type="text/javascript">
-		
-	    function pesquisarUsuario() {
-	    	
-	    	var pesquisar = document.getElementById('pesquisar').value;
-	    	
-	    	if (pesquisar != null && pesquisar != '' && pesquisar.trim() != '') {
-	    		
-	    		var urlAction = document.getElementById('formUser').action;
-				
-	    		$.ajax({
+		function pesquisarUsuario() {
+
+			var pesquisar = document.getElementById('pesquisar').value;
+
+			if (pesquisar != null && pesquisar != '' && pesquisar.trim() != '') {
+
+				var urlAction = document.getElementById('formUser').action;
+
+				$.ajax({
 					method : "get",
 					url : urlAction,
 					data : "pesquisar=" + pesquisar + '&acao=pesquisar',
-					success : function(response) {
-						alert(response);
+					success : function(response) {		
+						
+						var json = JSON.parse(response);
+						
+						$('#tabelaresultados > tbody > tr').remove();
+						
+						for (var i = 0; i < json.length; i++) {
+							$('#tabelaresultados > tbody')
+								.append('<tr> <td>'+json[i].id+'</td> <td>'+json[i].nome+'</td> <td><button type="button" class="btn btn-info">Detalhar</button></td> </tr>');
+						}
+						
+						document.getElementById('totalResultados').textContent = 'Total: ' + json.lenght;
+						
 					}
 				}).fail(function(xhr, status, errorThrown) {
 					alert('Erro ao pesquisar usuário: ' + xhr.responseText);
 				});
 			}
-	    }
-	
+		}
+
 		function limparForm() {
 			var elementos = document.getElementById("formUser").elements;
 			for (var p = 0; p < elementos.length; p++) {
