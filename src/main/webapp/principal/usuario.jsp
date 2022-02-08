@@ -172,7 +172,7 @@
 					url : urlAction,
 					data : "pesquisar=" + pesquisar + '&acao=pesquisar',
 					success : function(response) {
-						
+						alert(response);
 					}
 				}).fail(function(xhr, status, errorThrown) {
 					alert('Erro ao pesquisar usuário: ' + xhr.responseText);

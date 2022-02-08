@@ -3,6 +3,9 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import connection.SingleConnectionBanco;
 import model.ModelLogin;
@@ -57,6 +60,7 @@ public class DaoUsuarioRepository {
 	}
 	
 	public ModelLogin pesquisarLogin(String login) throws Exception {	
+		
 		ModelLogin modelLogin = new ModelLogin();
 		
 		String sql = "select * from model_login where lower(login) = lower('"+login+"');";   
@@ -85,5 +89,30 @@ public class DaoUsuarioRepository {
 		resultSet.next();
 		
 		return resultSet.getBoolean("existe");
+	}
+
+	public List<ModelLogin> pesquisar(String nome) throws Exception {
+		
+		ModelLogin modelLogin = new ModelLogin();
+		
+		List<ModelLogin> list = new ArrayList<>();
+		
+		String sql = "select * from model_login where  lower(nome) like lower(?);";
+		PreparedStatement statement = connection.prepareStatement(sql);
+		statement.setString(1, "%"+nome+"%");
+		
+		ResultSet resultSet = statement.executeQuery();
+		
+		while (resultSet.next()) {
+			modelLogin.setId(resultSet.getLong("id"));
+			modelLogin.setNome(resultSet.getString("nome"));
+			modelLogin.setEmail(resultSet.getString("email"));
+			modelLogin.setLogin(resultSet.getString("login"));
+//			modelLogin.setSenha(resultSet.getString("senha"));
+			
+			list.add(modelLogin);			
+		}
+		
+		return list;
 	}
 }
