@@ -42,10 +42,9 @@ public class ServletUsuarioController extends HttpServlet {
 				usuarioRepository.excluir(idUser);	
 				response.getWriter().write("Usuário excluído com sucesso!");
 			
-			} else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("pesquisar")) {
+			} else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("pesquisar")) {				
 				
 				String pesquisar = request.getParameter("pesquisar");
-				System.out.println(pesquisar);
 				
 				List<ModelLogin> list = usuarioRepository.pesquisar(pesquisar);
 				
@@ -53,6 +52,17 @@ public class ServletUsuarioController extends HttpServlet {
 				String json = mapper.writeValueAsString(list);
 				response.getWriter().write(json);
 			
+			}
+			
+			else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("buscarEditar")) {
+				
+				String id = request.getParameter("id");
+				
+				ModelLogin modelLogin = usuarioRepository.pesquisarId(id);
+				
+				request.setAttribute("msg", "Editando Usuário");
+				request.setAttribute("modelLogin", modelLogin);
+				request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
 			}
 			
 			else {

@@ -180,17 +180,27 @@
 						
 						$('#tabelaresultados > tbody > tr').remove();
 						
+						
 						for (var i = 0; i < json.length; i++) {
-							$('#tabelaresultados > tbody')
-								.append('<tr> <td>'+json[i].id+'</td> <td>'+json[i].nome+'</td> <td><button type="button" class="btn btn-info">Detalhar</button></td> </tr>');
-						}
-						
-						document.getElementById('totalResultados').textContent = 'Total: ' + json.lenght;
-						
-					}
-				}).fail(function(xhr, status, errorThrown) {
-					alert('Erro ao pesquisar usuário: ' + xhr.responseText);
-				});
+															$('#tabelaresultados > tbody')
+																	.append(
+																			'<tr> <td>'
+																					+ json[i].id
+																					+ '</td> <td>'
+																					+ json[i].nome
+																					+ '</td> <td><button onclick=visualizarEditar('+json[i].id+') type="button" class="btn btn-info">Detalhar</button></td> </tr>');
+														}
+
+										document
+												.getElementById('totalResultados').textContent = 'Total: '
+												+ json.lenght;
+
+									}
+								}).fail(
+								function(xhr, status, errorThrown) {
+									alert('Erro ao pesquisar usuário: '
+											+ xhr.responseText);
+								});
 			}
 		}
 
@@ -228,6 +238,11 @@
 				document.getElementById("formUser").submit();
 			}
 
+		}
+		
+		function visualizarEditar(id) {
+			var urlAction = document.getElementById('formUser').action;
+			window.location.href = urlAction + '?acao=buscarEditar&id='+id;
 		}
 	</script>
 </body>
