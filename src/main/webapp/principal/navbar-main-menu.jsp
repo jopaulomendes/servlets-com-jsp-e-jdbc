@@ -34,7 +34,7 @@
                           <div class="pcoded-navigation-label" data-i18n="nav.category.navigation">Layout</div>
                           <ul class="pcoded-item pcoded-left-item">
                               <li class="active">
-                                  <a href="principal/usuario.jsp" class="waves-effect waves-dark">
+                                  <a href="ServletUsuarioController" class="waves-effect waves-dark">
                                       <span class="pcoded-micon"><i class="ti-home"></i><b>D</b></span>
                                       <span class="pcoded-mtext" data-i18n="nav.dash.main">Home</span>
                                       <span class="pcoded-mcaret"></span>
@@ -48,7 +48,7 @@
                                   </a>
                                   <ul class="pcoded-submenu">
                                       <li class=" ">
-                                          <a href="principal/usuario.jsp" class="waves-effect waves-dark">
+                                          <a href="ServletUsuarioController?acao=listarUsuario" class="waves-effect waves-dark">
                                               <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                               <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Usuário</span>
                                               <span class="pcoded-mcaret"></span>

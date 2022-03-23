@@ -8,11 +8,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.DaoUsuarioRepository;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.ModelLogin;
 
+//@WebServlet(urlPatterns = {"ServletUsuarioController"})
 public class ServletUsuarioController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -28,22 +30,19 @@ public class ServletUsuarioController extends HttpServlet {
 			
 			String acao = request.getParameter("acao");
 
-			if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("excluir")) {
-				
+			if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("excluir")) {				
 				String idUser = request.getParameter("id");
 				usuarioRepository.excluir(idUser);
 				request.setAttribute("msg", "Usuário excluído com sucesso!");
 				
 				request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
 			
-			} else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("excluirajax")) {
-				
+			} else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("excluirajax")) {				
 				String idUser = request.getParameter("id");
 				usuarioRepository.excluir(idUser);	
 				response.getWriter().write("Usuário excluído com sucesso!");
 			
 			} else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("pesquisar")) {				
-				
 				String pesquisar = request.getParameter("pesquisar");
 				
 				List<ModelLogin> list = usuarioRepository.pesquisar(pesquisar);
@@ -54,14 +53,21 @@ public class ServletUsuarioController extends HttpServlet {
 			
 			}
 			
-			else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("buscarEditar")) {
-				
+			else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("buscarEditar")) {				
 				String id = request.getParameter("id");
 				
 				ModelLogin modelLogin = usuarioRepository.pesquisarId(id);
 				
 				request.setAttribute("msg", "Editando Usuário");
 				request.setAttribute("modelLogin", modelLogin);
+				request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
+			}
+			
+			else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("listarUsuario")) {
+				List<ModelLogin> list = usuarioRepository.pesquisar();
+				
+				request.setAttribute("msg", "Lista de usuários");
+				request.setAttribute("list", list);
 				request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
 			}
 			

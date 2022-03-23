@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -96,7 +98,34 @@
 														</form>
 													</div>
 												</div>
-											</div>
+											</div>											
+										</div>
+										
+										<!-- 											Lista de usuários cadastrados -->
+										<div class="col-md-10" style="height: 300px; overflow: scroll;">
+											<table class="table table-bordered"
+												id="tabelaresultadoslista">
+												<thead>
+													<tr>
+														<th scope="col">Código</th>
+														<th scope="col">Nome</th>
+														<th scope="col">E-mail</th>
+														<th scope="col">Detalhar</th>
+													</tr>
+												</thead>
+												<tbody>
+													<c:forEach items="${list}" var="lists">
+														<tr>
+															<td><c:out value="${lists.id }"></c:out></td>
+															<td><c:out value="${lists.nome }"></c:out></td>
+															<td><c:out value="${lists.email }"></c:out></td>
+															<td>
+																<a class="btn btn-info" href="<%=request.getContextPath()%>/ServletUsuarioController?acao=buscarEditar&id=${lists.id }">Detalhar</a>
+															</td>
+														</tr>
+													</c:forEach>
+												</tbody>
+											</table>
 										</div>
 									</div>
 									<!-- Page-body end -->
@@ -191,11 +220,10 @@
 																					+ '</td> <td><button onclick=visualizarEditar('+json[i].id+') type="button" class="btn btn-info">Detalhar</button></td> </tr>');
 														}
 
-										document
-												.getElementById('totalResultados').textContent = 'Total: '
-												+ json.lenght;
+										document.getElementById('totalResultados').textContent = 'Total: ' + json.length;
 
 									}
+				
 								}).fail(
 								function(xhr, status, errorThrown) {
 									alert('Erro ao pesquisar usuário: '
