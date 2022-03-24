@@ -40,67 +40,10 @@
 
 										<span id="msg" class="card-block success-breadcrumb">${msg}</span>
 
-										<div class="row"">
-											<div class="col-md-10">
-												<div class="card">
-													<div class="card-header">
-														<h2>Cadastro de usuário</h2>
-													</div>
-													<div class="card-block">
-														<form class="form-material"
-															action="<%=request.getContextPath()%>/ServletUsuarioController"
-															method="post" id="formUser">
-
-															<input type="hidden" name="acao" id="acao" value="">
-
-															<div class="form-group form-default">
-																<input type="hidden" name="id" id="id"
-																	class="form-control" readonly="readonly"
-																	value="${modelLogin.id}">
-																<!--                                                                 <span class="form-bar"></span> -->
-																<!--                                                                 <label class="float-label">Código</label> -->
-															</div>
-															<div class="form-group form-default">
-																<input type="text" name="nome" id="nome"
-																	class="form-control" value="${modelLogin.nome}"
-																	required="required"> <span class="form-bar"></span>
-																<label class="float-label">Nome</label>
-															</div>
-															<div class="form-group form-default">
-																<input type="email" name="email" id="email"
-																	class="form-control" value="${modelLogin.email}"
-																	required="required"> <span class="form-bar"></span>
-																<label class="float-label">Email</label>
-															</div>
-															<div class="form-group form-default">
-																<input type="text" name="login" id="login"
-																	class="form-control" value="${modelLogin.login}"
-																	required="required"> <span class="form-bar"></span>
-																<label class="float-label">Login</label>
-															</div>
-															<div class="form-group form-default">
-																<input type="password" name="senha" id="senha"
-																	class="form-control" value="${modelLogin.senha}"
-																	maxlength="6" required="required	"> <span
-																	class="form-bar"></span> <label class="float-label">Senha</label>
-															</div>
-
-															<button class="btn btn-success waves-effect waves-light">Salvar</button>
-															<button type="button" onclick="limparForm()"
-																class="btn btn-primary waves-effect waves-light">Novo</button>
-															<button type="button" onclick="excluirAjax()"
-																class="btn btn-danger waves-effect waves-light">Excluir</button>
-															<!-- Button trigger modal -->
-															<button type="button" class="btn btn-info"
-																data-toggle="modal" data-target="#exampleModalCenter">
-																Pesquisar
-															</button>
-														</form>
-													</div>
-												</div>
-											</div>											
+										<div class="card-header">
+											<h2>LIsta de usuário</h2>
 										</div>
-										
+
 										<!-- Lista de usuários cadastrados -->
 										<div class="col-md-10" style="height: 300px; overflow: scroll;">
 											<table class="table table-bordered"
@@ -120,10 +63,7 @@
 															<td><c:out value="${lists.nome }"></c:out></td>
 															<td><c:out value="${lists.email }"></c:out></td>
 															<td>
-																<a class="btn btn-info" 
-																		shref="<%=request.getContextPath()%>/ServletUsuarioController?acao=buscarEditar&id=${lists.id }">
-																	Detalhar
-																</a>
+																<a class="btn btn-info" href="<%=request.getContextPath()%>/ServletUsuarioController?acao=buscarEditar&id=${lists.id }">Detalhar</a>
 															</td>
 														</tr>
 													</c:forEach>

@@ -52,7 +52,7 @@ public class DaoUsuarioRepository {
 	}
 
 	public void excluir(String idUser) throws Exception {
-		String sql = "DELETE FROM model_login WHERE id=?;";
+		String sql = "DELETE FROM model_login WHERE id=? and useradmin is false;";
 
 		PreparedStatement statement = connection.prepareStatement(sql);
 		statement.setLong(1, Long.parseLong(idUser));
@@ -64,7 +64,7 @@ public class DaoUsuarioRepository {
 
 		ModelLogin modelLogin = new ModelLogin();
 
-		String sql = "select * from model_login where lower(login) = lower('" + login + "');";
+		String sql = "select * from model_login where lower(login) = lower('" + login + "') and useradmin is false;";
 
 		PreparedStatement statement = connection.prepareStatement(sql);
 
@@ -85,7 +85,7 @@ public class DaoUsuarioRepository {
 
 		ModelLogin modelLogin = new ModelLogin();
 
-		String sql = "select * from model_login where id = ? ";
+		String sql = "select * from model_login where id = ? and useradmin is false;";
 
 		PreparedStatement statement = connection.prepareStatement(sql);
 		statement.setLong(1, Long.parseLong(id));
@@ -120,7 +120,7 @@ public class DaoUsuarioRepository {
 
 		List<ModelLogin> list = new ArrayList<>();
 
-		String sql = "select * from model_login where  lower(nome) like lower(?);";
+		String sql = "select * from model_login where  lower(nome) like lower(?) and useradmin is false;";
 		PreparedStatement statement = connection.prepareStatement(sql);
 		statement.setString(1, "%" + nome + "%");
 
@@ -143,7 +143,7 @@ public class DaoUsuarioRepository {
 
 		List<ModelLogin> list = new ArrayList<ModelLogin>();
 
-		String sql = "select * from model_login ";
+		String sql = "select * from model_login where useradmin is false;";
 		PreparedStatement statement = connection.prepareStatement(sql);
 
 		ResultSet resultSet = statement.executeQuery();
