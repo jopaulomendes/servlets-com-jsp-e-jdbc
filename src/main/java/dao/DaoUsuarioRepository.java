@@ -77,6 +77,7 @@ public class DaoUsuarioRepository {
 			modelLogin.setEmail(resultSet.getString("email"));
 			modelLogin.setLogin(resultSet.getString("login"));
 			modelLogin.setSenha(resultSet.getString("senha"));
+			modelLogin.setUseradmin(resultSet.getBoolean("useradmin"));
 		}
 
 		return modelLogin;

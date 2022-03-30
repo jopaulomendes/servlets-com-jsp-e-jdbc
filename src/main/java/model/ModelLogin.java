@@ -11,6 +11,7 @@ public class ModelLogin implements Serializable {
 	private String email;
 	private String login;
 	private String senha;
+	private boolean useradmin;
 	
 	public boolean isNovo() {
 		
@@ -61,6 +62,14 @@ public class ModelLogin implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public boolean getUseradmin() {
+		return useradmin;
+	}
+
+	public void setUseradmin(boolean useradmin) {
+		this.useradmin = useradmin;
 	}
 
 }
