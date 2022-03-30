@@ -8,14 +8,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.DaoUsuarioRepository;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.ModelLogin;
 
 //@WebServlet(urlPatterns = {"ServletUsuarioController"})
-public class ServletUsuarioController extends HttpServlet {
+public class ServletUsuarioController extends ServletGenericUtils {
+	
 	private static final long serialVersionUID = 1L;
 
 	private DaoUsuarioRepository usuarioRepository = new DaoUsuarioRepository();
@@ -45,7 +44,7 @@ public class ServletUsuarioController extends HttpServlet {
 			} else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("pesquisar")) {				
 				String pesquisar = request.getParameter("pesquisar");
 				
-				List<ModelLogin> list = usuarioRepository.pesquisar(pesquisar);
+				List<ModelLogin> list = usuarioRepository.pesquisar(pesquisar, super.getUsuarioLogado(request));
 				
 				ObjectMapper mapper = new ObjectMapper();
 				String json = mapper.writeValueAsString(list);
@@ -56,7 +55,7 @@ public class ServletUsuarioController extends HttpServlet {
 			else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("buscarEditar")) {				
 				String id = request.getParameter("id");
 				
-				ModelLogin modelLogin = usuarioRepository.pesquisarId(id);
+				ModelLogin modelLogin = usuarioRepository.pesquisarId(id, super.getUsuarioLogado(request));
 				
 				request.setAttribute("msg", "Editando Usuário");
 				request.setAttribute("modelLogin", modelLogin);
@@ -64,7 +63,7 @@ public class ServletUsuarioController extends HttpServlet {
 			}
 			
 			else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("listarUsuario")) {
-				List<ModelLogin> list = usuarioRepository.pesquisar();
+				List<ModelLogin> list = usuarioRepository.pesquisar(super.getUsuarioLogado(request));
 				
 				request.setAttribute("msg", "Lista de usuários");
 				request.setAttribute("list", list);
@@ -110,7 +109,7 @@ public class ServletUsuarioController extends HttpServlet {
 				} else {
 					msg = "Usuário editado com sucesso";
 				}
-				modelLogin = usuarioRepository.salvar(modelLogin);
+				modelLogin = usuarioRepository.salvar(modelLogin, super.getUsuarioLogado(request));
 			}
 
 			request.setAttribute("msg", msg);
