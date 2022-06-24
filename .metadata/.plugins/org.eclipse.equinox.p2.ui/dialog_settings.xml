@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.equinox.internal.p2.ui.dialogs.TrustCertificateDialog">
+		<item key="exportFilterPath" value="/home/bruna"/>
+	</section>
+</section>

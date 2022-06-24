@@ -61,39 +61,86 @@
 																<!--                                                                 <label class="float-label">Código</label> -->
 															</div>
 															<div class="form-group form-default">
-																<input type="text" name="nome" id="nome"
-																	class="form-control" value="${modelLogin.nome}"
-																	required="required"> <span class="form-bar"></span>
+																<input 
+																	type="text" 
+																	name="nome" 
+																	id="nome"
+																	class="form-control" 
+																	value="${modelLogin.nome}"
+																	required="required"> 
+																<span class="form-bar"></span>
 																<label class="float-label">Nome</label>
 															</div>
 															<div class="form-group form-default">
-																<input type="email" name="email" id="email"
-																	class="form-control" value="${modelLogin.email}"
-																	required="required"> <span class="form-bar"></span>
+																<input 
+																	type="email" 
+																	name="email" 
+																	id="email"
+																	class="form-control" 
+																	value="${modelLogin.email}"
+																	required="required"> 
+																<span class="form-bar"></span>
 																<label class="float-label">Email</label>
 															</div>
+															
 															<div class="form-group form-default">
-																<input type="text" name="login" id="login"
-																	class="form-control" value="${modelLogin.login}"
-																	required="required"> <span class="form-bar"></span>
+																<select 
+																	class="form-control" 
+																	aria-label="Default select example" 
+																	name="perfil"
+																>
+																	<option selected disabled="disabled">Perfil</option>
+																	<option value="ADMIN">Administrador</option>
+																	<option value="AUX">Auxiliar</option>
+																	<option value="CAIXA">Caixa</option>
+																</select>
+<!-- 																<span class="form-bar"> -->
+<!-- 																	<label class="float-label">Perfil de usuário</label> -->
+<!-- 																</span> -->
+															</div>
+															
+															<div class="form-group form-default">
+																<input 
+																	type="text" 
+																	name="login" 
+																	id="login"
+																	class="form-control" 
+																	value="${modelLogin.login}"
+																	required="required"> 
+																<span class="form-bar"></span>
 																<label class="float-label">Login</label>
 															</div>
+															
 															<div class="form-group form-default">
-																<input type="password" name="senha" id="senha"
-																	class="form-control" value="${modelLogin.senha}"
-																	maxlength="6" required="required	"> <span
-																	class="form-bar"></span> <label class="float-label">Senha</label>
+																<input 
+																	type="password" 
+																	name="senha" 
+																	id="senha"
+																	class="form-control" 
+																	value="${modelLogin.senha}"
+																	maxlength="6" 
+																	required="required"> 
+																<span class="form-bar"></span> 
+																<label class="float-label">Senha</label>
 															</div>
 
 															<button class="btn btn-success waves-effect waves-light">Salvar</button>
-															<button type="button" onclick="limparForm()"
-																class="btn btn-primary waves-effect waves-light">Novo</button>
-															<button type="button" onclick="excluirAjax()"
-																class="btn btn-danger waves-effect waves-light">Excluir</button>
+															<button 
+																type="button" 
+																onclick="limparForm()"
+																class="btn btn-primary waves-effect waves-light">Novo
+															</button>
+															<button 
+																type="button" 
+																onclick="excluirAjax()"
+																class="btn btn-danger waves-effect waves-light">Excluir
+															</button>
 															<!-- Button trigger modal -->
-															<button type="button" class="btn btn-info"
-																data-toggle="modal" data-target="#exampleModalCenter">
-																Pesquisar
+															<button 
+																type="button" 
+																class="btn btn-info"
+																data-toggle="modal" 
+																data-target="#exampleModalCenter">Pesquisar
 															</button>
 														</form>
 													</div>
