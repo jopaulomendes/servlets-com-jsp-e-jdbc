@@ -1,3 +1,4 @@
+<%@page import="model.ModelLogin"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 	
@@ -57,8 +58,6 @@
 																<input type="hidden" name="id" id="id"
 																	class="form-control" readonly="readonly"
 																	value="${modelLogin.id}">
-																<!--                                                                 <span class="form-bar"></span> -->
-																<!--                                                                 <label class="float-label">Código</label> -->
 															</div>
 															<div class="form-group form-default">
 																<input 
@@ -67,7 +66,8 @@
 																	id="nome"
 																	class="form-control" 
 																	value="${modelLogin.nome}"
-																	required="required"> 
+																	required="required"
+																> 
 																<span class="form-bar"></span>
 																<label class="float-label">Nome</label>
 															</div>
@@ -78,7 +78,8 @@
 																	id="email"
 																	class="form-control" 
 																	value="${modelLogin.email}"
-																	required="required"> 
+																	required="required"
+																> 
 																<span class="form-bar"></span>
 																<label class="float-label">Email</label>
 															</div>
@@ -90,13 +91,48 @@
 																	name="perfil"
 																>
 																	<option selected disabled="disabled">Perfil</option>
-																	<option value="ADMIN">Administrador</option>
-																	<option value="AUX">Auxiliar</option>
-																	<option value="CAIXA">Caixa</option>
+																	<option 
+																		value="ADMIN"
+																		<% 
+																		ModelLogin modelLogin = (ModelLogin) request.getAttribute("modelLogin");
+																		if (modelLogin != null && modelLogin.getPerfil().equals("ADMIN")) {
+																			out.print(" ");
+																			out.print("selected=\"selected\"");
+																			out.print(" ");
+																		} 
+																		%>
+																	>
+																		Administrador
+																	</option>
+																	<option 
+																		value="AUX"																		
+																		<% 
+																		modelLogin = (ModelLogin) request.getAttribute("modelLogin");
+																		if (modelLogin != null && modelLogin.getPerfil().equals("AUX")) {
+																			out.print(" ");
+																			out.print("selected=\"selected\"");
+																			out.print(" ");
+																		} 
+																		%>
+																	>
+																		Auxiliar
+																	</option>
+																	<option 
+																		value="CAIXA"
+																		<% 
+																		modelLogin = (ModelLogin) request.getAttribute("modelLogin");
+																		if (modelLogin != null && modelLogin.getPerfil().equals("CAIXA")) {
+																			out.print(" ");
+																			out.print("selected=\"selected\"");
+																			out.print(" ");
+																		} 
+																		%>
+																	>
+																		Caixa
+																	</option>
 																</select>
-<!-- 																<span class="form-bar"> -->
-<!-- 																	<label class="float-label">Perfil de usuário</label> -->
-<!-- 																</span> -->
+																<span class="form-bar"></span>
+																<label class="float-label">Perfil</label>
 															</div>
 															
 															<div class="form-group form-default">
@@ -106,7 +142,8 @@
 																	id="login"
 																	class="form-control" 
 																	value="${modelLogin.login}"
-																	required="required"> 
+																	required="required"
+																> 
 																<span class="form-bar"></span>
 																<label class="float-label">Login</label>
 															</div>
@@ -119,7 +156,8 @@
 																	class="form-control" 
 																	value="${modelLogin.senha}"
 																	maxlength="6" 
-																	required="required"> 
+																	required="required"
+																> 
 																<span class="form-bar"></span> 
 																<label class="float-label">Senha</label>
 															</div>

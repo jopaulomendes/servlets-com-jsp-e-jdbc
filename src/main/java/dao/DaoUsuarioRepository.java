@@ -86,7 +86,7 @@ public class DaoUsuarioRepository {
 		return modelLogin;
 	}
 	
-//	pesquia por login
+ //	pesquia por login
 	public ModelLogin pesquisarLogin(String login) throws Exception {
 
 		ModelLogin modelLogin = new ModelLogin();
@@ -103,6 +103,7 @@ public class DaoUsuarioRepository {
 			modelLogin.setEmail(resultSet.getString("email"));
 			modelLogin.setLogin(resultSet.getString("login"));
 			modelLogin.setSenha(resultSet.getString("senha"));
+			modelLogin.setPerfil(resultSet.getString("perfil"));
 		}
 
 		return modelLogin;
@@ -130,7 +131,7 @@ public class DaoUsuarioRepository {
 		return modelLogin;
 	}
 
-//	pesquisar por id
+	//	pesquisar por id
 	public ModelLogin pesquisarId(String id, Long usuarioLogado) throws Exception {
 
 		ModelLogin modelLogin = new ModelLogin();
@@ -149,6 +150,7 @@ public class DaoUsuarioRepository {
 			modelLogin.setEmail(resultSet.getString("email"));
 			modelLogin.setLogin(resultSet.getString("login"));
 			modelLogin.setSenha(resultSet.getString("senha"));
+			modelLogin.setPerfil(resultSet.getString("perfil"));
 		}
 
 		return modelLogin;
@@ -165,7 +167,7 @@ public class DaoUsuarioRepository {
 		return resultSet.getBoolean("existe");
 	}
 
-//	pesquisar por nome
+	//	pesquisar por nome
 	public List<ModelLogin> pesquisar(String nome, Long usuarioLogado) throws Exception {
 
 		ModelLogin modelLogin = new ModelLogin();
@@ -186,6 +188,7 @@ public class DaoUsuarioRepository {
 			modelLogin.setEmail(resultSet.getString("email"));
 			modelLogin.setLogin(resultSet.getString("login"));
 //			modelLogin.setSenha(resultSet.getString("senha"));
+			modelLogin.setPerfil(resultSet.getString("perfil"));
 
 			list.add(modelLogin);
 		}
@@ -193,7 +196,7 @@ public class DaoUsuarioRepository {
 		return list;
 	}
 	
-//	Lista todos os usuário
+	//	Lista todos os usuário
 	public List<ModelLogin> pesquisar(Long usuarioLogado) throws Exception {
 
 		ModelLogin modelLogin = new ModelLogin();
