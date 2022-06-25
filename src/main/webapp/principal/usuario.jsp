@@ -41,24 +41,33 @@
 
 										<span id="msg" class="card-block success-breadcrumb">${msg}</span>
 
-										<div class="row"">
-											<div class="col-md-10">
+										<div class="row">
+											<div class="col-md-12">
 												<div class="card">
+													
 													<div class="card-header">
 														<h2>Cadastro de usuário</h2>
 													</div>
+													
 													<div class="card-block">
 														<form class="form-material"
+															
 															action="<%=request.getContextPath()%>/ServletUsuarioController"
 															method="post" id="formUser">
 
 															<input type="hidden" name="acao" id="acao" value="">
 
 															<div class="form-group form-default">
-																<input type="hidden" name="id" id="id"
-																	class="form-control" readonly="readonly"
-																	value="${modelLogin.id}">
+																<input 
+																	type="hidden" 
+																	name="id" 
+																	id="id"
+																	class="form-control" 
+																	readonly="readonly"
+																	value="${modelLogin.id}"
+																>
 															</div>
+															
 															<div class="form-group form-default">
 																<input 
 																	type="text" 
@@ -71,6 +80,7 @@
 																<span class="form-bar"></span>
 																<label class="float-label">Nome</label>
 															</div>
+															
 															<div class="form-group form-default">
 																<input 
 																	type="email" 
@@ -84,6 +94,44 @@
 																<label class="float-label">Email</label>
 															</div>
 															
+															<div class="form-group form-default" style="margin-left: 30px;">
+																<div class="form-check">
+																	<input 
+																		class="form-check-input" 
+																		type="radio" 
+																		name="sexo" 
+																		checked
+																		value="MASCULINO"
+																		<%
+																		ModelLogin modelLogin = (ModelLogin) request.getAttribute("modelLogin");
+																		if (modelLogin != null && modelLogin.getPerfil().equals("MASCULINO")) {
+																			out.print(" ");
+																			out.print("checked=\"checked\"");
+																			out.print(" ");
+																		}
+																		%>
+																	>
+																	<label class="form-check-label" for="sexo">Masculino</label>
+																</div>
+																<div class="form-check">
+																	<input 
+																		class="form-check-input" 
+																		type="radio" 
+																		name="sexo" 
+																		value="FEMININO"
+																		<%
+																		modelLogin = (ModelLogin) request.getAttribute("modelLogin");
+																		if (modelLogin != null && modelLogin.getPerfil().equals("FEMININO")) {
+																			out.print(" ");
+																			out.print("checked=\"checked\"");
+																			out.print(" ");
+																		}
+																		%>
+																	>
+																	<label class="form-check-label" for="sexo">Feminino</label>
+																</div>
+															</div>
+
 															<div class="form-group form-default">
 																<select 
 																	class="form-control" 
@@ -94,7 +142,7 @@
 																	<option 
 																		value="ADMIN"
 																		<% 
-																		ModelLogin modelLogin = (ModelLogin) request.getAttribute("modelLogin");
+																		modelLogin = (ModelLogin) request.getAttribute("modelLogin");
 																		if (modelLogin != null && modelLogin.getPerfil().equals("ADMIN")) {
 																			out.print(" ");
 																			out.print("selected=\"selected\"");
