@@ -126,9 +126,9 @@ public class ServletUsuarioController extends ServletGenericUtils {
 				msg = "Login em uso";
 			} else {
 				if (modelLogin.isNovo()) {
-					msg = "Usuário salvo com sucesso";
+					msg = "Usuário salvo com sucesso!";
 				} else {
-					msg = "Usuário editado com sucesso";
+					msg = "Usuário editado com sucesso!";
 				}
 				modelLogin = usuarioRepository.salvar(modelLogin, super.getUsuarioLogado(request));
 			}
