@@ -11,10 +11,8 @@
 <jsp:include page="head.jsp"></jsp:include>
 
 <body>
-	<!-- Pre-loader start -->
 	<jsp:include page="theme-loader.jsp"></jsp:include>
 
-	<!-- Pre-loader end -->
 	<div id="pcoded" class="pcoded">
 		<div class="pcoded-overlay-box"></div>
 		<div class="pcoded-container navbar-wrapper">
@@ -28,15 +26,11 @@
 					<jsp:include page="navbar-main-menu.jsp"></jsp:include>
 
 					<div class="pcoded-content">
-						<!-- Page-header start -->
 						<jsp:include page="page-header.jsp"></jsp:include>
 
-						<!-- Page-header end -->
 						<div class="pcoded-inner-content">
-							<!-- Main-body start -->
 							<div class="main-body">
 								<div class="page-wrapper">
-									<!-- Page-body start -->
 									<div class="page-body">
 
 										<span id="msg" class="card-block success-breadcrumb">${msg}</span>
@@ -50,10 +44,13 @@
 													</div>
 													
 													<div class="card-block">
-														<form class="form-material"
-															
+														<form 
+															class="form-material"															
 															action="<%=request.getContextPath()%>/ServletUsuarioController"
-															method="post" id="formUser">
+															method="post" 
+															id="formUser"
+															enctype="multpart/form-data"
+														>
 
 															<input type="hidden" name="acao" id="acao" value="">
 
@@ -67,7 +64,27 @@
 																	value="${modelLogin.id}"
 																>
 															</div>
-															
+
+															<div class="form-group form-default input-group mb-4">
+																<div class="input-group-prepend">
+																	<img 
+																		id="fotobase64"
+																		alt="Foto do usuário" 
+																		src="" 
+																		width="150px"
+																	>
+																</div>
+																<input 
+																	type="file" 
+																	id="filefoto"
+																	name="filefoto"
+																	accept="image/*"
+																	onchange="visualizarImg('fotobase64', 'filefoto');"
+																	class="form-control-file" 
+																	style="margin-top: 15px; margin-left: 10px;"
+																>
+															</div>
+
 															<div class="form-group form-default">
 																<input 
 																	type="text" 
@@ -104,7 +121,7 @@
 																		value="MASCULINO"
 																		<%
 																		ModelLogin modelLogin = (ModelLogin) request.getAttribute("modelLogin");
-																		if (modelLogin != null && modelLogin.getPerfil().equals("MASCULINO")) {
+																		if (modelLogin != null && modelLogin.getSexo().equals("MASCULINO")) {
 																			out.print(" ");
 																			out.print("checked=\"checked\"");
 																			out.print(" ");
@@ -121,7 +138,7 @@
 																		value="FEMININO"
 																		<%
 																		modelLogin = (ModelLogin) request.getAttribute("modelLogin");
-																		if (modelLogin != null && modelLogin.getPerfil().equals("FEMININO")) {
+																		if (modelLogin != null && modelLogin.getSexo().equals("FEMININO")) {
 																			out.print(" ");
 																			out.print("checked=\"checked\"");
 																			out.print(" ");
@@ -278,9 +295,14 @@
 	<jsp:include page="javascript.jsp"></jsp:include>
 
 	<!-- Modal -->
-	<div class="modal fade" id="exampleModalCenter" tabindex="-1"
-		role="dialog" aria-labelledby="exampleModalCenterTitle"
-		aria-hidden="true">
+	<div 
+		class="modal fade" 
+		id="exampleModalCenter" 
+		tabindex="-1"
+		role="dialog" 
+		aria-labelledby="exampleModalCenterTitle"
+		aria-hidden="true"
+	>
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -327,6 +349,23 @@
 	</div>
 
 	<script type="text/javascript">
+	
+		function visualizarImg(fotobase64, filefoto) {
+			var preview = document.getElementById(fotobase64);
+			var fileUser = document.getElementById(filefoto).files[0];
+			var reader = new FileReader();
+			
+			reader.onloadend = function () {
+				preview.src = reader.result; /*Carrega a foto na tela*/
+			}
+			
+			if (fileUser) {
+				reader.readAsDataURL(fileUser);
+			}
+			
+			preview.src = '';
+		}
+	
 		function pesquisarUsuario() {
 
 			var pesquisar = document.getElementById('pesquisar').value;

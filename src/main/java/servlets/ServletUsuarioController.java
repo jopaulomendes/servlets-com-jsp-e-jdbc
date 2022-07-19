@@ -3,16 +3,23 @@ package servlets;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.tomcat.jakartaee.commons.compress.utils.IOUtils;
+import org.apache.tomcat.util.codec.binary.Base64;
+import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dao.DaoUsuarioRepository;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
 import model.ModelLogin;
 
 //@WebServlet(urlPatterns = {"ServletUsuarioController"})
+@MultipartConfig
 public class ServletUsuarioController extends ServletGenericUtils {
 	
 	private static final long serialVersionUID = 1L;
@@ -97,6 +104,7 @@ public class ServletUsuarioController extends ServletGenericUtils {
 			String sexo = request.getParameter("sexo");
 
 			ModelLogin modelLogin = new ModelLogin();
+			
 			modelLogin.setId(id != null && !id.isEmpty() ? Long.parseLong(id) : null);
 			modelLogin.setNome(nome);
 			modelLogin.setEmail(email);
@@ -104,6 +112,15 @@ public class ServletUsuarioController extends ServletGenericUtils {
 			modelLogin.setSenha(senha);
 			modelLogin.setPerfil(perfil);
 			modelLogin.setSexo(sexo);
+			
+			if (ServletFileUpload.isMultipartContent(request)) {
+				Part part = request.getPart("filefoto"); // pega foto da tela
+				byte[] foto = IOUtils.toByteArray(part.getInputStream()); // converte imagem para byte
+				String imagemBase64 = "data:/image" + part.getContentType().split("\\/")[1] + ";base64," + new Base64().encodeBase64String(foto);
+				
+				modelLogin.setFoto(imagemBase64);
+				modelLogin.setFotoextensao(part.getContentType().split("\\/")[1]);
+			}
 
 			if (usuarioRepository.validarLogin(modelLogin.getLogin()) && modelLogin.getId() == null) {
 				msg = "Login em uso";
