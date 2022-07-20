@@ -34,11 +34,23 @@ public class DaoUsuarioRepository {
 
 			statement.execute();
 			connection.commit();
+			
+			if (modelLogin.getFoto() != null && !modelLogin.getFoto().isEmpty()) {
+				
+				sql = "update model_login set foto=?, fotoextensao=? where login=?";
+				
+				statement = connection.prepareStatement(sql);
+				statement.setString(1, modelLogin.getFoto());
+				statement.setString(2, modelLogin.getFotoextensao());
+				statement.setString(3, modelLogin.getLogin());
+				
+				statement.execute();
+				connection.commit();				
+			}
 
 		} else {
 
-			String sql = "update model_login set login=?, senha=?, nome=?, email=?, perfil=?, sexo=? where id = " + modelLogin.getId()
-					+ ";";
+			String sql = "update model_login set login=?, senha=?, nome=?, email=?, perfil=?, sexo=? where id = " + modelLogin.getId() + ";";
 
 			PreparedStatement statement = connection.prepareStatement(sql);
 			statement.setString(1, modelLogin.getLogin());
@@ -50,6 +62,19 @@ public class DaoUsuarioRepository {
 
 			statement.executeUpdate();
 			connection.commit();
+			
+			if (modelLogin.getFoto() != null && !modelLogin.getFoto().isEmpty()) {
+				
+				sql = "update model_login set foto=?, fotoextensao=? where id=?";
+				
+				statement = connection.prepareStatement(sql);
+				statement.setString(1, modelLogin.getFoto());
+				statement.setString(2, modelLogin.getFotoextensao());
+				statement.setLong(3, modelLogin.getId());
+				
+				statement.execute();
+				connection.commit();				
+			}
 		}
 
 		return this.pesquisarLogin(modelLogin.getLogin(), usuarioLogado);

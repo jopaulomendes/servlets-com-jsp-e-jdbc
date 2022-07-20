@@ -92,6 +92,7 @@ public class ServletUsuarioController extends ServletGenericUtils {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
 		try {
 			String msg = "Usuário salvo com sucesso!";
 
@@ -117,6 +118,8 @@ public class ServletUsuarioController extends ServletGenericUtils {
 				Part part = request.getPart("filefoto"); // pega foto da tela
 				byte[] foto = IOUtils.toByteArray(part.getInputStream()); // converte imagem para byte
 				String imagemBase64 = "data:/image" + part.getContentType().split("\\/")[1] + ";base64," + new Base64().encodeBase64String(foto);
+				
+				System.out.println(imagemBase64);
 				
 				modelLogin.setFoto(imagemBase64);
 				modelLogin.setFotoextensao(part.getContentType().split("\\/")[1]);

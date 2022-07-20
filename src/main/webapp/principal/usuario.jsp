@@ -49,7 +49,7 @@
 															action="<%=request.getContextPath()%>/ServletUsuarioController"
 															method="post" 
 															id="formUser"
-															enctype="multpart/form-data"
+															enctype="multipart/form-data"
 														>
 
 															<input type="hidden" name="acao" id="acao" value="">
@@ -71,7 +71,7 @@
 																		id="fotobase64"
 																		alt="Foto do usuário" 
 																		src="" 
-																		width="150px"
+																		width="200px"
 																	>
 																</div>
 																<input 
