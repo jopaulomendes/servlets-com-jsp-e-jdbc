@@ -51,7 +51,7 @@
 
 		<div class="invalid-feedback">Usuário!</div>
 		<div class="col-12">
-			<input class="form-control" name="login" type="text" placeholder="Usuário" required="required"> 
+			<input class="form-control" name="login" type="text" placeholder="Usuário" required="required" autofocus="autofocus"> 
 		</div> 
 		
 		<div class="invalid-feedback">Senha obrigatória!</div>

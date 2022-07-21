@@ -43,12 +43,16 @@ public class ServletUsuarioController extends ServletGenericUtils {
 				
 				request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
 			
-			} else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("excluirajax")) {				
+			} 
+			
+			else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("excluirajax")) {				
 				String idUser = request.getParameter("id");
 				usuarioRepository.excluir(idUser);	
 				response.getWriter().write("Usuário excluído com sucesso!");
 			
-			} else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("pesquisar")) {				
+			} 
+			
+			else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("pesquisar")) {				
 				String pesquisar = request.getParameter("pesquisar");
 				
 				List<ModelLogin> list = usuarioRepository.pesquisar(pesquisar, super.getUsuarioLogado(request));
@@ -75,6 +79,17 @@ public class ServletUsuarioController extends ServletGenericUtils {
 				request.setAttribute("msg", "Lista de usuários");
 				request.setAttribute("list", list);
 				request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
+			}
+			
+			else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("downloadFoto")) {
+				String idUser = request.getParameter("id");
+				
+				ModelLogin modelLogin = usuarioRepository.pesquisarId(idUser, super.getUsuarioLogado(request));
+				
+				if (modelLogin.getFoto() != null && !modelLogin.getFoto().isEmpty()) {
+					response.setHeader("Content-Disposition", "attachment;filename=arquivo." + modelLogin.getFotoextensao());
+					 response.getOutputStream().write(new Base64().decodeBase64(modelLogin.getFoto().split("\\,")[1]));
+				}
 			}
 			
 			else {

@@ -187,6 +187,7 @@ public class DaoUsuarioRepository {
 			modelLogin.setPerfil(resultSet.getString("perfil"));
 			modelLogin.setSexo(resultSet.getString("sexo"));
 			modelLogin.setFoto(resultSet.getString("foto"));
+			modelLogin.setFotoextensao(resultSet.getString("fotoextensao"));
 		}
 
 		return modelLogin;
