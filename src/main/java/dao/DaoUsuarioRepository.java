@@ -89,7 +89,7 @@ public class DaoUsuarioRepository {
 		connection.commit();
 	}
 	
-//	pesquia por login
+	//	pesquia por login
 	public ModelLogin pesquisarUsuarioLogado(String login) throws Exception {
 
 		ModelLogin modelLogin = new ModelLogin();
@@ -109,12 +109,13 @@ public class DaoUsuarioRepository {
 			modelLogin.setSenha(resultSet.getString("senha"));
 			modelLogin.setPerfil(resultSet.getString("perfil"));
 			modelLogin.setSexo(resultSet.getString("sexo"));
+			modelLogin.setFoto(resultSet.getString("foto"));
 		}
 
 		return modelLogin;
 	}
 	
- //	pesquia por login
+	//	pesquia por login
 	public ModelLogin pesquisarLogin(String login) throws Exception {
 
 		ModelLogin modelLogin = new ModelLogin();
@@ -133,12 +134,13 @@ public class DaoUsuarioRepository {
 			modelLogin.setSenha(resultSet.getString("senha"));
 			modelLogin.setPerfil(resultSet.getString("perfil"));
 			modelLogin.setSexo(resultSet.getString("sexo"));
+			modelLogin.setFoto(resultSet.getString("foto"));
 		}
 
 		return modelLogin;
 	}
 
-//	pesquia por login e usuario loagdo
+	//	pesquia por login e usuario loagdo
 	public ModelLogin pesquisarLogin(String login, Long usuarioLogado) throws Exception {
 
 		ModelLogin modelLogin = new ModelLogin();
@@ -157,6 +159,7 @@ public class DaoUsuarioRepository {
 			modelLogin.setSenha(resultSet.getString("senha"));
 			modelLogin.setPerfil(resultSet.getString("perfil"));
 			modelLogin.setSexo(resultSet.getString("sexo"));
+			modelLogin.setFoto(resultSet.getString("foto"));
 		}
 
 		return modelLogin;
@@ -183,6 +186,7 @@ public class DaoUsuarioRepository {
 			modelLogin.setSenha(resultSet.getString("senha"));
 			modelLogin.setPerfil(resultSet.getString("perfil"));
 			modelLogin.setSexo(resultSet.getString("sexo"));
+			modelLogin.setFoto(resultSet.getString("foto"));
 		}
 
 		return modelLogin;

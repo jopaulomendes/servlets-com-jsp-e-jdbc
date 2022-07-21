@@ -116,13 +116,19 @@ public class ServletUsuarioController extends ServletGenericUtils {
 			
 			if (ServletFileUpload.isMultipartContent(request)) {
 				Part part = request.getPart("filefoto"); // pega foto da tela
-				byte[] foto = IOUtils.toByteArray(part.getInputStream()); // converte imagem para byte
-				String imagemBase64 = "data:/image" + part.getContentType().split("\\/")[1] + ";base64," + new Base64().encodeBase64String(foto);
 				
-				System.out.println(imagemBase64);
+				if (part.getSize() >= 300000) {
+					request.setAttribute("msg", "O tamanho da foto de " +part.getSize()+ " não permitido. Por favor, insira uma foto com até 300 kb.");
+					System.out.println(part.getSize());
+				}
 				
-				modelLogin.setFoto(imagemBase64);
-				modelLogin.setFotoextensao(part.getContentType().split("\\/")[1]);
+				if (part.getSize() > 0) {
+					byte[] foto = IOUtils.toByteArray(part.getInputStream()); // converte imagem para byte
+					String imagemBase64 = "data:/image" + part.getContentType().split("\\/")[1] + ";base64," + new Base64().encodeBase64String(foto);
+					
+					modelLogin.setFoto(imagemBase64);
+					modelLogin.setFotoextensao(part.getContentType().split("\\/")[1]);					
+				}
 			}
 
 			if (usuarioRepository.validarLogin(modelLogin.getLogin()) && modelLogin.getId() == null) {
