@@ -118,6 +118,13 @@ public class ServletUsuarioController extends ServletGenericUtils {
 			String senha = request.getParameter("senha");
 			String perfil = request.getParameter("perfil");
 			String sexo = request.getParameter("sexo");
+			String cep = request.getParameter("cep");
+			String logradouro = request.getParameter("logradouro");
+			String complemento = request.getParameter("complemento");
+			String bairro = request.getParameter("bairro");
+			String localidade = request.getParameter("localidade");
+			String uf = request.getParameter("uf");
+			String numero = request.getParameter("numero");
 
 			ModelLogin modelLogin = new ModelLogin();
 			
@@ -128,14 +135,21 @@ public class ServletUsuarioController extends ServletGenericUtils {
 			modelLogin.setSenha(senha);
 			modelLogin.setPerfil(perfil);
 			modelLogin.setSexo(sexo);
+			modelLogin.setCep(cep);
+			modelLogin.setLogradouro(logradouro);
+			modelLogin.setComplemento(complemento);
+			modelLogin.setBairro(bairro);
+			modelLogin.setLocalidade(localidade);
+			modelLogin.setUf(uf);
+			modelLogin.setNumero(numero);
 			
 			if (ServletFileUpload.isMultipartContent(request)) {
 				Part part = request.getPart("filefoto"); // pega foto da tela
 				
-				if (part.getSize() >= 300000) {
-					request.setAttribute("msg", "O tamanho da foto de " +part.getSize()+ " não permitido. Por favor, insira uma foto com até 300 kb.");
-					System.out.println(part.getSize());
-				}
+//				if (part.getSize() >= 300000) {
+//					request.setAttribute("msg", "O tamanho da foto de " +part.getSize()+ " não permitido. Por favor, insira uma foto com até 300 kb.");
+//					System.out.println(part.getSize());
+//				}
 				
 				if (part.getSize() > 0) {
 					byte[] foto = IOUtils.toByteArray(part.getInputStream()); // converte imagem para byte

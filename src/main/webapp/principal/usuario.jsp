@@ -100,6 +100,8 @@
 																	style="margin-top: 15px; margin-left: 10px;"
 																>
 															</div>
+															
+															<fieldset>
 
 															<div class="form-group form-default">
 																<input 
@@ -127,6 +129,7 @@
 																<label class="float-label">Email</label>
 															</div>
 															
+															<p>Sexo</p>
 															<div class="form-group form-default" style="margin-left: 30px;">
 																<div class="form-check">
 																	<input 
@@ -164,6 +167,100 @@
 																	<label class="form-check-label" for="sexo">Feminino</label>
 																</div>
 															</div>
+															
+															<!-- Endereço -->
+															<div class="form-group form-default">
+																<input 
+																	type="text" 
+																	name="cep" 
+																	id="cep"
+																	class="form-control" 
+																	value="${modelLogin.cep}"
+																	required="required"
+																	onblur="pesquisaCep();"
+																> 
+																<span class="form-bar"></span>
+																<label class="float-label">CEP</label>
+															</div>
+															
+															<div class="form-group form-default">
+																<input 
+																	type="text" 
+																	name="logradouro" 
+																	id="logradouro"
+																	class="form-control" 
+																	value="${modelLogin.logradouro}"
+																	required="required"
+																> 
+																<span class="form-bar"></span>
+																<label class="float-label">Rua</label>
+															</div>
+															
+															<div class="form-group form-default">
+																<input 
+																	type="text" 
+																	name="complemento" 
+																	id="complemento"
+																	class="form-control" 
+																	value="${modelLogin.complemento}"
+																	required="false"
+																> 
+																<span class="form-bar"></span>
+																<label class="float-label">Complemento</label>
+															</div>
+															
+															<div class="form-group form-default">
+																<input 
+																	type="text" 
+																	name="bairro" 
+																	id="bairro"
+																	class="form-control" 
+																	value="${modelLogin.bairro}"
+																	required="required"
+																> 
+																<span class="form-bar"></span>
+																<label class="float-label">Bairro</label>
+															</div>
+															
+															<div class="form-group form-default">
+																<input 
+																	type="text" 
+																	name="localidade" 
+																	id="localidade"
+																	class="form-control" 
+																	value="${modelLogin.localidade}"
+																	required="required"
+																> 
+																<span class="form-bar"></span>
+																<label class="float-label">Cidade</label>
+															</div>
+															
+															<div class="form-group form-default">
+																<input 
+																	type="text" 
+																	name="uf" 
+																	id="uf"
+																	class="form-control" 
+																	value="${modelLogin.uf}"
+																	required="required"
+																> 
+																<span class="form-bar"></span>
+																<label class="float-label">Estado</label>
+															</div>
+															
+															<div class="form-group form-default">
+																<input 
+																	type="text" 
+																	name="numero" 
+																	id="numero"
+																	class="form-control" 
+																	value="${modelLogin.numero}"
+																	required="required"
+																> 
+																<span class="form-bar"></span>
+																<label class="float-label">Número</label>
+															</div>
+															<br>
 
 															<div class="form-group form-default">
 																<select 
@@ -365,6 +462,68 @@
 	</div>
 
 	<script type="text/javascript">
+	
+		function pesquisaCep() {
+			
+			var cep = $("#cep").val();
+			
+			//Verifica se campo cep possui valor informado.
+            if (cep != "") {
+            	
+            	//Expressão regular para validar o CEP.
+                var validacep = /^[0-9]{8}$/;
+                
+             	 //Valida o formato do CEP.
+                if(validacep.test(cep)) {
+                	
+                	//Preenche os campos com "..." enquanto consulta webservice.
+                    $("#cep").val("...");
+		            $("#rua").val("...");
+		            $("#complemento").val("...");
+		            $("#bairro").val("..");
+		            $("#cidade").val("...");
+		            $("#uf").val("...");
+			
+					//Consulta o webservice viacep.com.br/
+		            $.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+		            	
+		            	if (!("erro" in dados)) {
+		                    //Atualiza os campos com os valores da consulta.
+		                    $("#cep").val(dados.cep);
+		                    $("#logradouro").val(dados.logradouro);
+		                    $("#complemento").val(dados.complemento);
+		                    $("#bairro").val(dados.bairro);
+		                    $("#localidade").val(dados.localidade);
+		                    $("#uf").val(dados.uf);
+		                } //end if.
+		                else {
+		                    //CEP pesquisado não foi encontrado.
+		                    limpa_formulário_cep();
+		                    alert("CEP não encontrado.");
+		                }
+		            });
+		        }
+                else {
+                    //cep é inválido.
+                    limpa_formulário_cep();
+                    alert("Formato de CEP inválido.");
+                }
+            }
+            else {
+                //cep sem valor, limpa formulário.
+                limpa_formulário_cep();
+            }
+		}
+		
+		function limpa_formulário_cep() {
+            // Limpa valores do formulário de cep.
+			$("#cep").val("");
+            $("#rua").val("");
+            $("#complemento").val("");
+            $("#bairro").val("");
+            $("#cidade").val("");
+            $("#uf").val("");
+        }
 	
 		function visualizarImg(fotobase64, filefoto) {
 			var preview = document.getElementById(fotobase64);
