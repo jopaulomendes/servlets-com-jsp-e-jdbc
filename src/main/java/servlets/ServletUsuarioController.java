@@ -74,6 +74,7 @@ public class ServletUsuarioController extends ServletGenericUtils {
 			}
 			
 			else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("listarUsuario")) {
+				
 				List<ModelLogin> list = usuarioRepository.pesquisar(super.getUsuarioLogado(request));
 				
 				request.setAttribute("msg", "Lista de usuários");
@@ -125,6 +126,11 @@ public class ServletUsuarioController extends ServletGenericUtils {
 			String localidade = request.getParameter("localidade");
 			String uf = request.getParameter("uf");
 			String numero = request.getParameter("numero");
+			String cpf = request.getParameter("cpf");
+			String rg = request.getParameter("rg");
+			String nascimento = request.getParameter("nascimento");
+			String foneUm = request.getParameter("foneUm");
+			String foneDois = request.getParameter("foneDois");
 
 			ModelLogin modelLogin = new ModelLogin();
 			
@@ -142,6 +148,11 @@ public class ServletUsuarioController extends ServletGenericUtils {
 			modelLogin.setLocalidade(localidade);
 			modelLogin.setUf(uf);
 			modelLogin.setNumero(numero);
+			modelLogin.setCpf(cpf);
+			modelLogin.setRg(rg);
+			modelLogin.setNascimento(nascimento);
+			modelLogin.setFoneUm(foneUm);
+			modelLogin.setFoneDois(foneDois);
 			
 			if (ServletFileUpload.isMultipartContent(request)) {
 				Part part = request.getPart("filefoto"); // pega foto da tela

@@ -46,17 +46,39 @@
 	
 	<h4>${msg}</h4>
 	
-	<form class="row g-3 needs-validation" action="<%=request.getContextPath() %>/ServletLogin" method="POST" novalidate>
-		<input type="hidden" value="<%= request.getParameter("url") %>" name="url">
+	<form 
+		class="row g-3 needs-validation" 
+		action="<%=request.getContextPath() %>/ServletLogin" 
+		method="POST" 
+		novalidate
+	>
+		<input 
+			type="hidden" 
+			value="<%= request.getParameter("url") %>" 
+			name="url"
+		>
 
 		<div class="invalid-feedback">Usuário!</div>
 		<div class="col-12">
-			<input class="form-control" name="login" type="text" placeholder="Usuário" required="required" autofocus="autofocus"> 
+			<input 
+				class="form-control" 
+				name="login" 
+				type="text" 
+				placeholder="Usuário" 
+				required="required" 
+				autofocus="autofocus"
+			> 
 		</div> 
 		
 		<div class="invalid-feedback">Senha obrigatória!</div>
 		<div class="mb-3">
-			<input class="form-control" name="senha" type="password" placeholder="Senha" required="required"> 
+			<input 
+				class="form-control" 
+				name="senha" 
+				type="password" 
+				placeholder="Senha" 
+				required="required"
+			> 
 		</div>
 		
 		<div class="col-12">

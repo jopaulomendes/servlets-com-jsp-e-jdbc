@@ -22,8 +22,8 @@ public class DaoUsuarioRepository {
 		if (modelLogin.isNovo()) {
 
 			String sql = "insert into model_login"
-					+ "(login, senha, nome, email, usuario_id, perfil, sexo, cep, logradouro, complemento, bairro, localidade, uf, numero) "
-					+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+					+ "(login, senha, nome, email, usuario_id, perfil, sexo, cep, logradouro, complemento, bairro, localidade, uf, numero, cpf, rg, nascimento, fone_um, fone_dois) "
+					+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
 			PreparedStatement statement = connection.prepareStatement(sql);
 			statement.setString(1, modelLogin.getLogin());
@@ -40,6 +40,11 @@ public class DaoUsuarioRepository {
 			statement.setString(12, modelLogin.getLocalidade());
 			statement.setString(13, modelLogin.getUf());
 			statement.setString(14, modelLogin.getNumero());
+			statement.setString(15, modelLogin.getCpf());
+			statement.setString(16, modelLogin.getRg());
+			statement.setString(17, modelLogin.getNascimento());
+			statement.setString(18, modelLogin.getFoneUm());
+			statement.setString(19, modelLogin.getFoneDois());
 
 			statement.execute();
 			connection.commit();
@@ -60,7 +65,8 @@ public class DaoUsuarioRepository {
 		} else {
 
 			String sql = "update model_login "
-					+ "set login=?, senha=?, nome=?, email=?, perfil=?, sexo=?, cep=?, logradouro=?, complemento=?, bairro=?, localidade=?, uf=?, numero=? "
+					+ "set login=?, senha=?, nome=?, email=?, perfil=?, sexo=?, cep=?, logradouro=?, complemento=?, bairro=?, localidade=?, uf=?, numero=?, "
+					+ "cpf=?, rg=?, nascimento=?, fone_um=?, fone_dois=?"
 					+ "where id = " + modelLogin.getId() + ";";
 
 			PreparedStatement statement = connection.prepareStatement(sql);
@@ -77,6 +83,11 @@ public class DaoUsuarioRepository {
 			statement.setString(11, modelLogin.getLocalidade());
 			statement.setString(12, modelLogin.getUf());
 			statement.setString(13, modelLogin.getNumero());
+			statement.setString(14, modelLogin.getCpf());
+			statement.setString(15, modelLogin.getRg());
+			statement.setString(16, modelLogin.getNascimento());
+			statement.setString(17, modelLogin.getFoneUm());
+			statement.setString(18, modelLogin.getFoneDois());
 
 			statement.executeUpdate();
 			connection.commit();
@@ -135,6 +146,11 @@ public class DaoUsuarioRepository {
 			modelLogin.setLocalidade(resultSet.getString("localidade"));
 			modelLogin.setUf(resultSet.getString("uf"));
 			modelLogin.setNumero(resultSet.getString("numero"));
+			modelLogin.setCpf(resultSet.getString("cpf"));
+			modelLogin.setRg(resultSet.getString("rg"));
+			modelLogin.setNascimento(resultSet.getString("nascimento"));
+			modelLogin.setFoneUm(resultSet.getString("fone_um"));
+			modelLogin.setFoneDois(resultSet.getString("fone_dois"));
 		}
 
 		return modelLogin;
@@ -167,6 +183,11 @@ public class DaoUsuarioRepository {
 			modelLogin.setLocalidade(resultSet.getString("localidade"));
 			modelLogin.setUf(resultSet.getString("uf"));
 			modelLogin.setNumero(resultSet.getString("numero"));
+			modelLogin.setCpf(resultSet.getString("cpf"));
+			modelLogin.setRg(resultSet.getString("rg"));
+			modelLogin.setNascimento(resultSet.getString("nascimento"));
+			modelLogin.setFoneUm(resultSet.getString("fone_um"));
+			modelLogin.setFoneDois(resultSet.getString("fone_dois"));
 		}
 
 		return modelLogin;
@@ -199,6 +220,11 @@ public class DaoUsuarioRepository {
 			modelLogin.setLocalidade(resultSet.getString("localidade"));
 			modelLogin.setUf(resultSet.getString("uf"));
 			modelLogin.setNumero(resultSet.getString("numero"));
+			modelLogin.setCpf(resultSet.getString("cpf"));
+			modelLogin.setRg(resultSet.getString("rg"));
+			modelLogin.setNascimento(resultSet.getString("nascimento"));
+			modelLogin.setFoneUm(resultSet.getString("fone_um"));
+			modelLogin.setFoneDois(resultSet.getString("fone_dois"));
 		}
 
 		return modelLogin;
@@ -234,6 +260,11 @@ public class DaoUsuarioRepository {
 			modelLogin.setLocalidade(resultSet.getString("localidade"));
 			modelLogin.setUf(resultSet.getString("uf"));
 			modelLogin.setNumero(resultSet.getString("numero"));
+			modelLogin.setCpf(resultSet.getString("cpf"));
+			modelLogin.setRg(resultSet.getString("rg"));
+			modelLogin.setNascimento(resultSet.getString("nascimento"));
+			modelLogin.setFoneUm(resultSet.getString("fone_um"));
+			modelLogin.setFoneDois(resultSet.getString("fone_dois"));
 		}
 
 		return modelLogin;
@@ -287,7 +318,33 @@ public class DaoUsuarioRepository {
 
 		List<ModelLogin> list = new ArrayList<ModelLogin>();
 
-		String sql = "select * from model_login where useradmin is false and usuario_id = " + usuarioLogado;
+		String sql = "select * from model_login where useradmin is false and usuario_id = " + usuarioLogado + " limit 5";
+		PreparedStatement statement = connection.prepareStatement(sql);
+
+		ResultSet resultSet = statement.executeQuery();
+
+		while (resultSet.next()) {
+			modelLogin.setId(resultSet.getLong("id"));
+			modelLogin.setNome(resultSet.getString("nome"));
+			modelLogin.setEmail(resultSet.getString("email"));
+			modelLogin.setLogin(resultSet.getString("login"));
+//			modelLogin.setSenha(resultSet.getString("senha"));
+			modelLogin.setPerfil(resultSet.getString("perfil"));
+			modelLogin.setSexo(resultSet.getString("sexo"));
+
+			list.add(modelLogin);
+		}
+
+		return list;
+	}
+	
+	public List<ModelLogin> pesquisarUsuarioLista(String nome, Long usuarioLogado) throws Exception {
+
+		ModelLogin modelLogin = new ModelLogin();
+
+		List<ModelLogin> list = new ArrayList<ModelLogin>();
+
+		String sql = "select * from model_login where where upper(nome) like upper (?) and useradmin is false and usuario_id  = ? limit 5";
 		PreparedStatement statement = connection.prepareStatement(sql);
 
 		ResultSet resultSet = statement.executeQuery();

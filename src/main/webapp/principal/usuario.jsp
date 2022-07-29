@@ -102,164 +102,265 @@
 															</div>
 															
 															<fieldset>
-
-															<div class="form-group form-default">
-																<input 
-																	type="text" 
-																	name="nome" 
-																	id="nome"
-																	class="form-control" 
-																	value="${modelLogin.nome}"
-																	required="required"
-																> 
-																<span class="form-bar"></span>
-																<label class="float-label">Nome</label>
-															</div>
-															
-															<div class="form-group form-default">
-																<input 
-																	type="email" 
-																	name="email" 
-																	id="email"
-																	class="form-control" 
-																	value="${modelLogin.email}"
-																	required="required"
-																> 
-																<span class="form-bar"></span>
-																<label class="float-label">Email</label>
-															</div>
-															
-															<p>Sexo</p>
-															<div class="form-group form-default" style="margin-left: 30px;">
-																<div class="form-check">
+																<legend>Dados Pessoais</legend>																
+																<div class="form-group form-default">
 																	<input 
-																		class="form-check-input" 
-																		type="radio" 
-																		name="sexo" 
-																		checked
-																		value="MASCULINO"
-																		<%
-																		ModelLogin modelLogin = (ModelLogin) request.getAttribute("modelLogin");
-																		if (modelLogin != null && modelLogin.getSexo().equals("MASCULINO")) {
-																			out.print(" ");
-																			out.print("checked=\"checked\"");
-																			out.print(" ");
-																		}
-																		%>
-																	>
-																	<label class="form-check-label" for="sexo">Masculino</label>
+																		type="text" 
+																		name="nome" 
+																		id="nome"
+																		class="form-control" 
+																		value="${modelLogin.nome}"
+																		required="required"
+																	> 
+																	<span class="form-bar"></span>
+																	<label class="float-label">Nome</label>
 																</div>
-																<div class="form-check">
+																
+																<div class="form-group form-default">
 																	<input 
-																		class="form-check-input" 
-																		type="radio" 
-																		name="sexo" 
-																		value="FEMININO"
-																		<%
-																		modelLogin = (ModelLogin) request.getAttribute("modelLogin");
-																		if (modelLogin != null && modelLogin.getSexo().equals("FEMININO")) {
-																			out.print(" ");
-																			out.print("checked=\"checked\"");
-																			out.print(" ");
-																		}
-																		%>
-																	>
-																	<label class="form-check-label" for="sexo">Feminino</label>
+																		type="text" 
+																		name="cpf" 
+																		id="cpf"
+																		class="form-control" 
+																		value="${modelLogin.cpf}"
+																		required="required"
+																	> 
+																	<span class="form-bar"></span>
+																	<label class="float-label">CPF</label>
 																</div>
-															</div>
+																
+																<div class="form-group form-default">
+																	<input 
+																		type="text" 
+																		name="rg" 
+																		id="rg"
+																		class="form-control" 
+																		value="${modelLogin.rg}"
+																		required="required"
+																	> 
+																	<span class="form-bar"></span>
+																	<label class="float-label">RG</label>
+																</div>
+																
+																<div class="form-group form-default">
+																	<input 
+																		type="text" 
+																		name="nascimento" 
+																		id="nascimento"
+																		class="form-control" 
+																		value="${modelLogin.nascimento}"
+																		required="required"
+																	> 
+																	<span class="form-bar"></span>
+																	<label class="float-label">Nascimento</label>
+																</div>
+																
+																<p>Sexo</p>
+																<div class="form-group form-default" style="margin-left: 30px;">
+																	<div class="form-check">
+																		<input 
+																			class="form-check-input" 
+																			type="radio" 
+																			name="sexo" 
+																			checked
+																			value="MASCULINO"
+																			<%
+																			ModelLogin modelLogin = (ModelLogin) request.getAttribute("modelLogin");
+																			if (modelLogin != null && modelLogin.getSexo().equals("MASCULINO")) {
+																				out.print(" ");
+																				out.print("checked=\"checked\"");
+																				out.print(" ");
+																			}
+																			%>
+																		>
+																		<label class="form-check-label" for="sexo">Masculino</label>
+																	</div>
+																	<div class="form-check">
+																		<input 
+																			class="form-check-input" 
+																			type="radio" 
+																			name="sexo" 
+																			value="FEMININO"
+																			<%
+																			modelLogin = (ModelLogin) request.getAttribute("modelLogin");
+																			if (modelLogin != null && modelLogin.getSexo().equals("FEMININO")) {
+																				out.print(" ");
+																				out.print("checked=\"checked\"");
+																				out.print(" ");
+																			}
+																			%>
+																		>
+																		<label class="form-check-label" for="sexo">Feminino</label>
+																	</div>
+																</div>
+															</fieldset>
 															
-															<!-- Endereço -->
-															<div class="form-group form-default">
-																<input 
-																	type="text" 
-																	name="cep" 
-																	id="cep"
-																	class="form-control" 
-																	value="${modelLogin.cep}"
-																	required="required"
-																	onblur="pesquisaCep();"
-																> 
-																<span class="form-bar"></span>
-																<label class="float-label">CEP</label>
-															</div>
+															<fieldset>
+																<legend>Online</legend>																
+																<div class="form-group form-default">
+																	<input 
+																		type="email" 
+																		name="email" 
+																		id="email"
+																		class="form-control" 
+																		value="${modelLogin.email}"
+																		required="required"
+																	> 
+																	<span class="form-bar"></span>
+																	<label class="float-label">Email</label>
+																</div>
+																
+																<div class="form-group form-default">
+																	<input 
+																		type="text" 
+																		name="login" 
+																		id="login"
+																		class="form-control" 
+																		value="${modelLogin.login}"
+																		required="required"
+																	> 
+																	<span class="form-bar"></span>
+																	<label class="float-label">Login</label>
+																</div>
+																
+																<div class="form-group form-default">
+																	<input 
+																		type="password" 
+																		name="senha" 
+																		id="senha"
+																		class="form-control" 
+																		value="${modelLogin.senha}"
+																		maxlength="10" 
+																		required="required"
+																	> 
+																	<span class="form-bar"></span> 
+																	<label class="float-label">Senha</label>
+																</div>
+															</fieldset>
 															
-															<div class="form-group form-default">
-																<input 
-																	type="text" 
-																	name="logradouro" 
-																	id="logradouro"
-																	class="form-control" 
-																	value="${modelLogin.logradouro}"
-																	required="required"
-																> 
-																<span class="form-bar"></span>
-																<label class="float-label">Rua</label>
-															</div>
+															<fieldset>
+																<legend>Endereço</legend>
+																<div class="form-group form-default">
+																	<input 
+																		type="text" 
+																		name="cep" 
+																		id="cep"
+																		class="form-control" 
+																		value="${modelLogin.cep}"
+																		required="required"
+																		onblur="pesquisaCep();"
+																	> 
+																	<span class="form-bar"></span>
+																	<label class="float-label">CEP</label>
+																</div>
+																
+																<div class="form-group form-default">
+																	<input 
+																		type="text" 
+																		name="logradouro" 
+																		id="logradouro"
+																		class="form-control" 
+																		value="${modelLogin.logradouro}"
+																		required="required"
+																	> 
+																	<span class="form-bar"></span>
+																	<label class="float-label">Rua</label>
+																</div>
+																
+																<div class="form-group form-default">
+																	<input 
+																		type="text" 
+																		name="numero" 
+																		id="numero"
+																		class="form-control" 
+																		value="${modelLogin.numero}"
+																		required="required"
+																	> 
+																	<span class="form-bar"></span>
+																	<label class="float-label">Número</label>
+																</div>
+																
+																<div class="form-group form-default">
+																	<input 
+																		type="text" 
+																		name="complemento" 
+																		id="complemento"
+																		class="form-control" 
+																		value="${modelLogin.complemento}"
+																		required="false"
+																	> 
+																	<span class="form-bar"></span>
+																	<label class="float-label">Complemento</label>
+																</div>
+																
+																<div class="form-group form-default">
+																	<input 
+																		type="text" 
+																		name="bairro" 
+																		id="bairro"
+																		class="form-control" 
+																		value="${modelLogin.bairro}"
+																		required="required"
+																	> 
+																	<span class="form-bar"></span>
+																	<label class="float-label">Bairro</label>
+																</div>
+																
+																<div class="form-group form-default">
+																	<input 
+																		type="text" 
+																		name="localidade" 
+																		id="localidade"
+																		class="form-control" 
+																		value="${modelLogin.localidade}"
+																		required="required"
+																	> 
+																	<span class="form-bar"></span>
+																	<label class="float-label">Cidade</label>
+																</div>
+																
+																<div class="form-group form-default">
+																	<input 
+																		type="text" 
+																		name="uf" 
+																		id="uf"
+																		class="form-control" 
+																		value="${modelLogin.uf}"
+																		required="required"
+																	> 
+																	<span class="form-bar"></span>
+																	<label class="float-label">Estado</label>
+																</div>
+															</fieldset>
 															
-															<div class="form-group form-default">
-																<input 
-																	type="text" 
-																	name="complemento" 
-																	id="complemento"
-																	class="form-control" 
-																	value="${modelLogin.complemento}"
-																	required="false"
-																> 
-																<span class="form-bar"></span>
-																<label class="float-label">Complemento</label>
-															</div>
-															
-															<div class="form-group form-default">
-																<input 
-																	type="text" 
-																	name="bairro" 
-																	id="bairro"
-																	class="form-control" 
-																	value="${modelLogin.bairro}"
-																	required="required"
-																> 
-																<span class="form-bar"></span>
-																<label class="float-label">Bairro</label>
-															</div>
-															
-															<div class="form-group form-default">
-																<input 
-																	type="text" 
-																	name="localidade" 
-																	id="localidade"
-																	class="form-control" 
-																	value="${modelLogin.localidade}"
-																	required="required"
-																> 
-																<span class="form-bar"></span>
-																<label class="float-label">Cidade</label>
-															</div>
-															
-															<div class="form-group form-default">
-																<input 
-																	type="text" 
-																	name="uf" 
-																	id="uf"
-																	class="form-control" 
-																	value="${modelLogin.uf}"
-																	required="required"
-																> 
-																<span class="form-bar"></span>
-																<label class="float-label">Estado</label>
-															</div>
-															
-															<div class="form-group form-default">
-																<input 
-																	type="text" 
-																	name="numero" 
-																	id="numero"
-																	class="form-control" 
-																	value="${modelLogin.numero}"
-																	required="required"
-																> 
-																<span class="form-bar"></span>
-																<label class="float-label">Número</label>
-															</div>
+															<fieldset>
+																<legend>Telefones</legend>
+																<div class="form-group form-default">
+																	<input 
+																		type="text" 
+																		name="foneUm" 
+																		id="foneDois"
+																		class="form-control" 
+																		value="${modelLogin.foneUm}"
+																		required="required"
+																	> 
+																	<span class="form-bar"></span>
+																	<label class="float-label">Telefone1</label>
+																</div>
+																
+																<div class="form-group form-default">
+																	<input 
+																		type="text" 
+																		name="foneDois" 
+																		id="foneDois"
+																		class="form-control" 
+																		value="${modelLogin.foneDois}"
+																		required="required"
+																	> 
+																	<span class="form-bar"></span>
+																	<label class="float-label">Telefone2</label>
+																</div>
+															</fieldset>
 															<br>
 
 															<div class="form-group form-default">
@@ -313,32 +414,7 @@
 																<label class="float-label">Perfil</label>
 															</div>
 															
-															<div class="form-group form-default">
-																<input 
-																	type="text" 
-																	name="login" 
-																	id="login"
-																	class="form-control" 
-																	value="${modelLogin.login}"
-																	required="required"
-																> 
-																<span class="form-bar"></span>
-																<label class="float-label">Login</label>
-															</div>
 															
-															<div class="form-group form-default">
-																<input 
-																	type="password" 
-																	name="senha" 
-																	id="senha"
-																	class="form-control" 
-																	value="${modelLogin.senha}"
-																	maxlength="6" 
-																	required="required"
-																> 
-																<span class="form-bar"></span> 
-																<label class="float-label">Senha</label>
-															</div>
 
 															<button class="btn btn-success waves-effect waves-light">Salvar</button>
 															<button 

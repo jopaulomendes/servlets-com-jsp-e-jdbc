@@ -36,7 +36,7 @@
                                     <!-- Page-body start -->
                                     <div class="page-body">
                                         <div class="row">
-                                            <h1>Página Home do Sistema</h1>
+                                            <h1>Página Principal do Sistema</h1>
                                         </div>
                                     </div>
                                     <!-- Page-body end -->

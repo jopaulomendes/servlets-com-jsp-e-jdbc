@@ -25,6 +25,12 @@ public class ModelLogin implements Serializable {
 	private String uf;
 	private String numero;
 	
+	private String cpf;
+	private String rg;
+	private String nascimento;
+	private String foneUm;
+	private String foneDois;
+	
 	public boolean isNovo() {
 		
 		if (this.id == null) {
@@ -170,6 +176,46 @@ public class ModelLogin implements Serializable {
 
 	public void setLogradouro(String logradouro) {
 		this.logradouro = logradouro;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+	public String getRg() {
+		return rg;
+	}
+
+	public void setRg(String rg) {
+		this.rg = rg;
+	}
+
+	public String getFoneDois() {
+		return foneDois;
+	}
+
+	public void setFoneDois(String foneDois) {
+		this.foneDois = foneDois;
+	}
+
+	public String getNascimento() {
+		return nascimento;
+	}
+
+	public void setNascimento(String nascimento) {
+		this.nascimento = nascimento;
+	}
+
+	public String getFoneUm() {
+		return foneUm;
+	}
+
+	public void setFoneUm(String foneUm) {
+		this.foneUm = foneUm;
 	}
 
 }
