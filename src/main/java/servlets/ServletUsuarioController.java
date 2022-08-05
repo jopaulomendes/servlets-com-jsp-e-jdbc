@@ -40,7 +40,7 @@ public class ServletUsuarioController extends ServletGenericUtils {
 				String idUser = request.getParameter("id");
 				usuarioRepository.excluir(idUser);
 				request.setAttribute("msg", "Usuário excluído com sucesso!");
-				
+				request.setAttribute("totalPagina", usuarioRepository.totalPagina(this.getUsuarioLogado(request)));
 				request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
 			
 			} 
@@ -70,6 +70,7 @@ public class ServletUsuarioController extends ServletGenericUtils {
 				
 				request.setAttribute("msg", "Editando Usuário");
 				request.setAttribute("modelLogin", modelLogin);
+				request.setAttribute("totalPagina", usuarioRepository.totalPagina(this.getUsuarioLogado(request)));
 				request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
 			}
 			
@@ -79,6 +80,7 @@ public class ServletUsuarioController extends ServletGenericUtils {
 				
 				request.setAttribute("msg", "Lista de usuários");
 				request.setAttribute("list", list);
+				request.setAttribute("totalPagina", usuarioRepository.totalPagina(this.getUsuarioLogado(request)));
 				request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
 			}
 			
@@ -94,6 +96,7 @@ public class ServletUsuarioController extends ServletGenericUtils {
 			}
 			
 			else {
+				request.setAttribute("totalPagina", usuarioRepository.totalPagina(this.getUsuarioLogado(request)));
 				request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
 			}
 			
@@ -184,6 +187,7 @@ public class ServletUsuarioController extends ServletGenericUtils {
 
 			request.setAttribute("msg", msg);
 			request.setAttribute("modelLogin", modelLogin); // mantém os dados na tela
+			request.setAttribute("totalPagina", usuarioRepository.totalPagina(this.getUsuarioLogado(request)));
 			request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
 
 		} catch (Exception e) {
