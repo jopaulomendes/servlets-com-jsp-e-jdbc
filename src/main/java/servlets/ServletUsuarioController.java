@@ -95,7 +95,20 @@ public class ServletUsuarioController extends ServletGenericUtils {
 				}
 			}
 			
+			else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("paginar")) {
+				Integer offset = Integer.parseInt(request.getParameter("pagina"));
+				
+				List<ModelLogin> list = usuarioRepository.consultaUsuarioListPaginada(this.getUsuarioLogado(request), offset);
+				
+				request.setAttribute("list", list);
+				request.setAttribute("totalPagina", usuarioRepository.totalPagina(this.getUsuarioLogado(request)));
+				request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
+			}
+			
 			else {
+				List<ModelLogin> list = usuarioRepository.pesquisar(this.getUsuarioLogado(request));
+				
+				request.setAttribute("list", list);
 				request.setAttribute("totalPagina", usuarioRepository.totalPagina(this.getUsuarioLogado(request)));
 				request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
 			}

@@ -344,7 +344,33 @@ public class DaoUsuarioRepository {
 
 		List<ModelLogin> list = new ArrayList<ModelLogin>();
 
-		String sql = "select * from model_login where where upper(nome) like upper (?) and useradmin is false and usuario_id  = ? limit 5";
+		String sql = "select * from model_login where upper(nome) like upper (?) and useradmin is false and usuario_id  = ? limit 5";
+		PreparedStatement statement = connection.prepareStatement(sql);
+
+		ResultSet resultSet = statement.executeQuery();
+
+		while (resultSet.next()) {
+			modelLogin.setId(resultSet.getLong("id"));
+			modelLogin.setNome(resultSet.getString("nome"));
+			modelLogin.setEmail(resultSet.getString("email"));
+			modelLogin.setLogin(resultSet.getString("login"));
+//			modelLogin.setSenha(resultSet.getString("senha"));
+			modelLogin.setPerfil(resultSet.getString("perfil"));
+			modelLogin.setSexo(resultSet.getString("sexo"));
+
+			list.add(modelLogin);
+		}
+
+		return list;
+	}
+	
+	public List<ModelLogin> consultaUsuarioListPaginada(Long usuarioLogado, Integer offset) throws Exception {
+		
+		ModelLogin modelLogin = new ModelLogin();
+
+		List<ModelLogin> list = new ArrayList<ModelLogin>();
+
+		String sql = "select * from model_login where useradmin is false and usuario_id = " + usuarioLogado + " order by nome offset " +offset+ " limit 5";
 		PreparedStatement statement = connection.prepareStatement(sql);
 
 		ResultSet resultSet = statement.executeQuery();
@@ -370,6 +396,7 @@ public class DaoUsuarioRepository {
 		PreparedStatement statement = connection.prepareStatement(sql);
 
 		ResultSet resultSet = statement.executeQuery();
+		resultSet.next();
 		
 		Double cadastros = resultSet.getDouble("total");
 		Double porPagina = 5.0;
