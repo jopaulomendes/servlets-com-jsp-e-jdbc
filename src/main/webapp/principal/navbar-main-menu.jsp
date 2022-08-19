@@ -17,11 +17,22 @@
 	<div class="pcoded-inner-navbar main-menu">
 		<div class="">
 			<div class="main-menu-header">
-				<img 
-					class="img-80 img-radius"
-					src="<%=request.getContextPath()%>/assets/images/avatar-4.jpg"
-					alt="User-Profile-Image"
-				>
+				
+				<c:if test="${imagemUsuario != '' && imagemUsuario != null}">
+					<img 
+						class="img-80 img-radius"
+						src="${imagemUsuario}"
+						alt="User-Profile-Image"
+					>
+				</c:if>				
+				<c:if test="${imagemUsuario == '' || imagemUsuario == null}">
+					<img 
+						class="img-80 img-radius"
+						src="<%=request.getContextPath()%>/assets/images/avatar-4.jpg"
+						alt="User-Profile-Image"
+					>
+				</c:if>
+				
 				<div class="user-details">
 <!-- 					 mostra usuário logado -->
 					<span id="more-details"><%=session.getAttribute("usuario")%> 
@@ -32,16 +43,10 @@
 
 			<div class="main-menu-content">
 				<ul>
-					<li class="more-details">
-						<a href="user-profile.html">
-							<i class="ti-user"></i>View Profile
-						</a> 
-						<a href="#!">
-							<i	class="ti-settings"></i>Settings
-						</a> 
+					<li class="more-details"> 
 						<a	href="<%=request.getContextPath()%>/ServletLogin?acao=sair">
-							Layout
-							<i class="ti-layout-sidebar-left"></i>Sair
+							<i class="ti-layout-sidebar-left"></i>
+							Sair
 						</a>
 					</li>
 				</ul>

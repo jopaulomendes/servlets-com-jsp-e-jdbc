@@ -74,9 +74,11 @@
 						</li>
 						<li class="waves-effect waves-light">
 							<div class="media">
-								<img class="d-flex align-self-center img-radius"
+								<img 
+									class="d-flex align-self-center img-radius"
 									src="<%=request.getContextPath()%>/assets/images/avatar-4.jpg"
-									alt="Generic placeholder image">
+									alt="Generic placeholder image"
+								>
 								<div class="media-body">
 									<h5 class="notification-user">Joseph William</h5>
 									<p class="notification-msg">Lorem ipsum dolor sit amet,
@@ -99,31 +101,25 @@
 							</div>
 						</li>
 					</ul></li>
-				<li class="user-profile header-notification"><a href="#!"
-					class="waves-effect waves-light"> <img
-						src="<%=request.getContextPath()%>/assets/images/avatar-4.jpg"
-						class="img-radius" alt="User-Profile-Image"> <span><%=session.getAttribute("usuario")%></span>
+				<li class="user-profile header-notification">
+					<a href="#!" class="waves-effect waves-light">
+<!-- 						<img  -->
+<%-- 							src="<%=request.getContextPath()%>/assets/images/avatar-4.jpg" --%>
+<!-- 							class="img-radius"  -->
+<!-- 							alt="User-Profile-Image" -->
+<!-- 						>  -->
+						<span><%=session.getAttribute("usuario")%></span>
 						<i class="ti-angle-down"></i>
-				</a>
+					</a>
 					<ul class="show-notification profile-notification">
-						<li class="waves-effect waves-light"><a href="#!"> <i
-								class="ti-settings"></i> Settings
-						</a></li>
-						<li class="waves-effect waves-light"><a
-							href="user-profile.html"> <i class="ti-user"></i> Profile
-						</a></li>
-						<li class="waves-effect waves-light"><a
-							href="email-inbox.html"> <i class="ti-email"></i> My Messages
-						</a></li>
-						<li class="waves-effect waves-light"><a
-							href="auth-lock-screen.html"> <i class="ti-lock"></i> Lock
-								Screen
-						</a></li>
-						<li class="waves-effect waves-light"><a
-							href="<%=request.getContextPath()%>/ServletLogin?acao=sair">
-								<i class="ti-layout-sidebar-left"></i> Sair
-						</a></li>
-					</ul></li>
+						<li class="waves-effect waves-light">
+							<a href="<%=request.getContextPath()%>/ServletLogin?acao=sair">
+								<i class="ti-layout-sidebar-left"></i> 
+								Sair
+							</a>
+						</li>
+					</ul>
+				</li>
 			</ul>
 		</div>
 	</div>
