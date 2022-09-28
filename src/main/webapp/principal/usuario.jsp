@@ -441,9 +441,15 @@
 										</div>
 										
 										<!-- Lista de usuários cadastrados -->
-										<div class="col-md-10" style="height: 300px; overflow: scroll;">
-											<table class="table table-bordered"
-												id="tabelaresultadoslista">
+										<div 
+											class="col-md-12" 
+											style="height: 300px; 
+											overflow: scroll;"
+										>
+											<table 
+												class="table table-bordered"
+												id="tabelaresultadosview"
+											>
 												<thead>
 													<tr>
 														<th scope="col">Código</th>
@@ -453,7 +459,7 @@
 													</tr>
 												</thead>
 												<tbody>
-													<c:forEach items="${list}" var="lists">
+													<c:forEach items="${logins}" var="lists">
 														<tr>
 															<td><c:out value="${lists.id }"></c:out></td>
 															<td><c:out value="${lists.nome }"></c:out></td>
@@ -477,10 +483,9 @@
 													
 													for(int p = 0; p < totalPagina; p++){
 														String url = request.getContextPath() + "/ServletUsuarioController?acao=paginar&pagina=" + (p * 5);
-														out.print("<li class=\"page-item\"><a class=\"page-link\" href=\""+url+"\">"+(p + 1)+"</a></li>");
+														out.print("<li class=\"page-item\"><a class=\"page-link\" href=\""+ url +"\">"+(p + 1)+"</a></li>");
 													}
 												%>
-												<li class="page-item"><a class="page-link" href="#">1</a></li>
 											</ul>
 										</nav>
 									</div>
@@ -509,8 +514,9 @@
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLongTitle">Pesquisar
-						usuário</h5>
+					<h5 class="modal-title" id="exampleModalLongTitle">
+						Pesquisar usuário
+					</h5>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
@@ -520,15 +526,20 @@
 				<div class="modal-body">
 					<div class="input-group mb-3">
 						<input type="text" class="form-control" placeholder="Pesquisar..."
-							aria-label="pesquisar" id="pesquisar"
+							aria-label="pesquisar" id="nomeBusca"
 							aria-describedby="basic-addon2">
-						<button type="button" class="btn btn-primary"
-							onclick="pesquisarUsuario();">Pesquisar</button>
+						<button 
+							type="button" 
+							class="btn btn-primary"
+							onclick="pesquisarUsuario();"
+						>
+							Pesquisar
+						</button>
 					</div>
 				</div>
 
 				<div style="height: 300px; overflow: scroll;">
-					<table class="table table-bordered" id="tabelaresultados">
+					<table class="table table-bordered" id="tabelaresultadoslista">
 						<thead>
 							<tr>
 								<th scope="col">Código</th>
@@ -541,6 +552,12 @@
 						</tbody>
 					</table>
 				</div>
+				
+				<nav aria-label="Page navigation example">
+					<ul class="pagination" id="paginacaoAjax">
+					</ul>
+				</nav>
+				
 				<span id="totalResultados"></span>
 
 				<div class="modal-footer">
@@ -630,45 +647,94 @@
 			
 			preview.src = '';
 		}
+		
+		function buscarUsuarioPagAjax(url) {
+			var urlAction = document.getElementById('formUser').action;
+		    var nomeBusca = document.getElementById('nomeBusca').value;
+		    
+			$.ajax({
+				method : "get",
+				url : urlAction,
+				data : url,
+				success : function(response, textStatus, xhr) {		
+					
+					var json = JSON.parse(response);
+					
+					$('#tabelaresultadoslista > tbody > tr').remove();
+					$('#paginacaoAjax > li').remove();
+					
+					
+					for (var i = 0; i < json.length; i++) {
+						$('#tabelaresultadoslista > tbody')
+							.append(
+								'<tr> <td>'
+									+ json[i].id
+									+ '</td> <td>'
+									+ json[i].nome
+									+ '</td> <td><button onclick="visualizarEditar('+json[i].id+')" type="button" class="btn btn-info">Detalhar</button></td> </tr>');
+					}
+
+					document.getElementById('totalResultados').textContent = 'Total: ' + json.length;
+					
+					var totalPagina = xhr.getResponseHeader("totalPagina");
+					
+					for (var p = 0; p < totalPagina; p++) {
+						var url = 'nomeBusca=' + nomeBusca + '&acao=buscarUserAjaxPage&pagina='+(p*5);
+						$("#paginacaoAjax").append('<li class="page-item"><a class="page-link" href="#" onclick="buscarUsuarioPagAjax(\''+url+'\')">'+(p+1)+'</a></li>');
+					}
+					
+				}
+			
+			}).fail(
+			function(xhr, status, errorThrown) {
+				alert('Erro ao pesquisar usuário: '	+ xhr.responseText);
+			});
+		}
 	
 		function pesquisarUsuario() {
 
-			var pesquisar = document.getElementById('pesquisar').value;
+			var nomeBusca = document.getElementById('nomeBusca').value;
 
-			if (pesquisar != null && pesquisar != '' && pesquisar.trim() != '') {
+			if (nomeBusca != null && nomeBusca != '' && nomeBusca.trim() != '') {
 
 				var urlAction = document.getElementById('formUser').action;
 
 				$.ajax({
 					method : "get",
 					url : urlAction,
-					data : "pesquisar=" + pesquisar + '&acao=pesquisar',
-					success : function(response) {		
+					data : "nomeBusca=" + nomeBusca + '&acao=buscarUserAjax',
+					success : function(response, textStatus, xhr) {		
 						
 						var json = JSON.parse(response);
 						
-						$('#tabelaresultados > tbody > tr').remove();
-						
+						$('#tabelaresultadoslista > tbody > tr').remove();
+						$('#paginacaoAjax > li').remove();						
 						
 						for (var i = 0; i < json.length; i++) {
-															$('#tabelaresultados > tbody')
-																	.append(
-																			'<tr> <td>'
-																					+ json[i].id
-																					+ '</td> <td>'
-																					+ json[i].nome
-																					+ '</td> <td><button onclick=visualizarEditar('+json[i].id+') type="button" class="btn btn-info">Detalhar</button></td> </tr>');
-														}
+							$('#tabelaresultadoslista > tbody')
+								.append(
+									'<tr> <td>'
+										+ json[i].id
+										+ '</td> <td>'
+										+ json[i].nome
+										+ '</td> <td><button onclick="visualizarEditar('+json[i].id+')" type="button" class="btn btn-info">Detalhar</button></td> </tr>');
+						}
 
-										document.getElementById('totalResultados').textContent = 'Total: ' + json.length;
-
-									}
+						document.getElementById('totalResultados').textContent = 'Total: ' + json.length;
+						
+						var totalPagina = xhr.getResponseHeader("totalPagina");
+						
+						for (var p = 0; p < totalPagina; p++) {
+							var url = 'nomeBusca=' + nomeBusca + '&acao=buscarUserAjaxPage&pagina='+(p*5);
+							$("#paginacaoAjax").append('<li class="page-item"><a class="page-link" href="#" onclick="buscarUsuarioPagAjax(\''+url+'\')">'+(p+1)+'</a></li>');
+						}
+						
+					}
 				
-								}).fail(
-								function(xhr, status, errorThrown) {
-									alert('Erro ao pesquisar usuário: '
-											+ xhr.responseText);
-								});
+				}).fail(
+				function(xhr, status, errorThrown) {
+					alert('Erro ao pesquisar usuário: '	+ xhr.responseText);
+				});
 			}
 		}
 

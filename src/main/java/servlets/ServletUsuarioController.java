@@ -38,7 +38,12 @@ public class ServletUsuarioController extends ServletGenericUtils {
 
 			if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("excluir")) {				
 				String idUser = request.getParameter("id");
+				
 				usuarioRepository.excluir(idUser);
+				
+				List<ModelLogin> logins = usuarioRepository.consultaUsuarioList(super.getUsuarioLogado(request));
+				request.setAttribute("logins", logins);
+				
 				request.setAttribute("msg", "Usuário excluído com sucesso!");
 				request.setAttribute("totalPagina", usuarioRepository.totalPagina(this.getUsuarioLogado(request)));
 				request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
@@ -50,23 +55,63 @@ public class ServletUsuarioController extends ServletGenericUtils {
 				usuarioRepository.excluir(idUser);	
 				response.getWriter().write("Usuário excluído com sucesso!");
 			
-			} 
+			}
+			
+			// pesquisa usuário por Ajax
+			else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("buscarUserAjax")) {
+				 
+				 String nomeBusca = request.getParameter("nomeBusca");
+				 
+				 List<ModelLogin> dadosJsonUser =  usuarioRepository.consultaUsuarioList(nomeBusca, super.getUsuarioLogado(request));
+				 
+				 ObjectMapper mapper = new ObjectMapper();
+				 
+				 String json = mapper.writeValueAsString(dadosJsonUser);
+				 
+				 response.addHeader("totalPagina", ""+ usuarioRepository.pesquisarUsuarioListaPaginacao(nomeBusca, super.getUsuarioLogado(request)));
+				 response.getWriter().write(json);
+				 
+			 }
+			
+			// pesquisa usuário por Ajax Paginado
+			else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("buscarUserAjaxPage")) {
+				 
+				 String nomeBusca = request.getParameter("nomeBusca");
+				 String pagina = request.getParameter("pagina");
+				 
+				 List<ModelLogin> dadosJsonUser =  usuarioRepository.consultaUsuarioListOffSet(nomeBusca, super.getUsuarioLogado(request), Integer.parseInt(pagina));
+				 
+				 ObjectMapper mapper = new ObjectMapper();
+				 
+				 String json = mapper.writeValueAsString(dadosJsonUser);
+				 
+				 response.addHeader("totalPagina", ""+ usuarioRepository.pesquisarUsuarioListaPaginacao(nomeBusca, super.getUsuarioLogado(request)));
+				 response.getWriter().write(json);
+				 
+			 }
 			
 			else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("pesquisar")) {				
+				
 				String pesquisar = request.getParameter("pesquisar");
 				
-				List<ModelLogin> list = usuarioRepository.pesquisar(pesquisar, super.getUsuarioLogado(request));
+				List<ModelLogin> logins = usuarioRepository.pesquisar(pesquisar, super.getUsuarioLogado(request));
 				
 				ObjectMapper mapper = new ObjectMapper();
-				String json = mapper.writeValueAsString(list);
+				String json = mapper.writeValueAsString(logins);
+				
+				response.addHeader("totalPagina", ""+ usuarioRepository.pesquisarListaPaginada(pesquisar, super.getUsuarioLogado(request)));
 				response.getWriter().write(json);
 			
 			}
 			
 			else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("buscarEditar")) {				
+				
 				String id = request.getParameter("id");
 				
 				ModelLogin modelLogin = usuarioRepository.pesquisarId(id, super.getUsuarioLogado(request));
+				
+				List<ModelLogin> logins = usuarioRepository.consultaUsuarioList(super.getUsuarioLogado(request));
+				request.setAttribute("logins", logins);
 				
 				request.setAttribute("msg", "Editando Usuário");
 				request.setAttribute("modelLogin", modelLogin);
@@ -76,10 +121,10 @@ public class ServletUsuarioController extends ServletGenericUtils {
 			
 			else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("listarUsuario")) {
 				
-				List<ModelLogin> list = usuarioRepository.pesquisar(super.getUsuarioLogado(request));
+				List<ModelLogin> logins = usuarioRepository.consultaUsuarioList(super.getUsuarioLogado(request));
 				
 				request.setAttribute("msg", "Lista de usuários");
-				request.setAttribute("list", list);
+				request.setAttribute("logins", logins);
 				request.setAttribute("totalPagina", usuarioRepository.totalPagina(this.getUsuarioLogado(request)));
 				request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
 			}
@@ -96,19 +141,20 @@ public class ServletUsuarioController extends ServletGenericUtils {
 			}
 			
 			else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("paginar")) {
+				
 				Integer offset = Integer.parseInt(request.getParameter("pagina"));
 				
-				List<ModelLogin> list = usuarioRepository.consultaUsuarioListPaginada(this.getUsuarioLogado(request), offset);
+				List<ModelLogin> logins = usuarioRepository.consultaUsuarioListPaginada(this.getUsuarioLogado(request), offset);
 				
-				request.setAttribute("list", list);
+				request.setAttribute("logins", logins);
 				request.setAttribute("totalPagina", usuarioRepository.totalPagina(this.getUsuarioLogado(request)));
 				request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
 			}
 			
 			else {
-				List<ModelLogin> list = usuarioRepository.pesquisar(this.getUsuarioLogado(request));
+				List<ModelLogin> logins = usuarioRepository.consultaUsuarioList(this.getUsuarioLogado(request));
 				
-				request.setAttribute("list", list);
+				request.setAttribute("logins", logins);
 				request.setAttribute("totalPagina", usuarioRepository.totalPagina(this.getUsuarioLogado(request)));
 				request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
 			}
