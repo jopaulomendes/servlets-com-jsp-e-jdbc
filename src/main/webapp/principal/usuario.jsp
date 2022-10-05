@@ -287,7 +287,6 @@
 																		id="complemento"
 																		class="form-control" 
 																		value="${modelLogin.complemento}"
-																		required="false"
 																	> 
 																	<span class="form-bar"></span>
 																	<label class="float-label">Complemento</label>
@@ -339,7 +338,7 @@
 																	<input 
 																		type="text" 
 																		name="foneUm" 
-																		id="foneDois"
+																		id="foneUm"
 																		class="form-control" 
 																		value="${modelLogin.foneUm}"
 																		required="required"
@@ -355,7 +354,6 @@
 																		id="foneDois"
 																		class="form-control" 
 																		value="${modelLogin.foneDois}"
-																		required="required"
 																	> 
 																	<span class="form-bar"></span>
 																	<label class="float-label">Telefone2</label>
@@ -778,6 +776,22 @@
 			var urlAction = document.getElementById('formUser').action;
 			window.location.href = urlAction + '?acao=buscarEditar&id='+id;
 		}
+		
+		$("#cep").keypress(function (event) {
+			return /\d/.test(String.fromCharCode(event.keyCode));
+		});
+		
+		$("#numero").keypress(function (event) {
+			return /\d/.test(String.fromCharCode(event.keyCode));
+		});
+		
+		$("#foneUm").keypress(function (event) {
+			return /\d/.test(String.fromCharCode(event.keyCode));
+		});
+		
+		$("#foneDois").keypress(function (event) {
+			return /\d/.test(String.fromCharCode(event.keyCode));
+		});
 	</script>
 </body>
 
