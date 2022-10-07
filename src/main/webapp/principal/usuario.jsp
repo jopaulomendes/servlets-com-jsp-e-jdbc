@@ -155,6 +155,19 @@
 																	<label class="float-label">Nascimento</label>
 																</div>
 																
+																<div class="form-group form-default">
+																	<input 
+																		type="text" 
+																		name="salario" 
+																		id="salario"
+																		class="form-control" 
+																		value="${modelLogin.salario}"
+																		required="required"
+																	> 
+																	<span class="form-bar"></span>
+																	<label class="float-label">Salário</label>
+																</div>
+																
 																<p>Sexo</p>
 																<div class="form-group form-default" style="margin-left: 30px;">
 																	<div class="form-check">
@@ -805,6 +818,8 @@
 			    prevText: 'Anterior'
 				});
 			} );
+		
+		$("#salario").maskMoney({showSymbol:true, symbol:"R$ ", decimal:",", thousands:"."});
 	</script>
 </body>
 

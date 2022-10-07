@@ -30,6 +30,7 @@ public class ModelLogin implements Serializable {
 	private String nascimento;
 	private String foneUm;
 	private String foneDois;
+	private Double salario;
 	
 	public boolean isNovo() {
 		
@@ -216,6 +217,14 @@ public class ModelLogin implements Serializable {
 
 	public void setFoneUm(String foneUm) {
 		this.foneUm = foneUm;
+	}
+
+	public Double getSalario() {
+		return salario;
+	}
+
+	public void setSalario(Double salario) {
+		this.salario = salario;
 	}
 
 }

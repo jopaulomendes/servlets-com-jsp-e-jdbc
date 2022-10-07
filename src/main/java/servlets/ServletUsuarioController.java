@@ -193,6 +193,9 @@ public class ServletUsuarioController extends ServletGenericUtils {
 			String nascimento = request.getParameter("nascimento");
 			String foneUm = request.getParameter("foneUm");
 			String foneDois = request.getParameter("foneDois");
+			String salario = request.getParameter("salario");
+			
+			salario = salario.replaceAll("\\.", "").replaceAll("\\,", ".");
 
 			ModelLogin modelLogin = new ModelLogin();
 			
@@ -215,6 +218,7 @@ public class ServletUsuarioController extends ServletGenericUtils {
 			modelLogin.setNascimento(nascimento);
 			modelLogin.setFoneUm(foneUm);
 			modelLogin.setFoneDois(foneDois);
+			modelLogin.setSalario(Double.valueOf(salario));
 			
 			if (ServletFileUpload.isMultipartContent(request)) {
 				Part part = request.getPart("filefoto"); // pega foto da tela

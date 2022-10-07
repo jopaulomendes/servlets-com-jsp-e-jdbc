@@ -22,8 +22,9 @@ public class DaoUsuarioRepository {
 		if (modelLogin.isNovo()) {
 
 			String sql = "insert into model_login"
-					+ "(login, senha, nome, email, usuario_id, perfil, sexo, cep, logradouro, complemento, bairro, localidade, uf, numero, cpf, rg, nascimento, fone_um, fone_dois) "
-					+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+					+ "(login, senha, nome, email, usuario_id, perfil, sexo, cep, logradouro, complemento, bairro, localidade, uf, numero, "
+					+ "cpf, rg, nascimento, fone_um, fone_dois, salario) "
+					+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
 			PreparedStatement statement = connection.prepareStatement(sql);
 			statement.setString(1, modelLogin.getLogin());
@@ -45,6 +46,7 @@ public class DaoUsuarioRepository {
 			statement.setString(17, modelLogin.getNascimento());
 			statement.setString(18, modelLogin.getFoneUm());
 			statement.setString(19, modelLogin.getFoneDois());
+			statement.setDouble(20, modelLogin.getSalario());
 
 			statement.execute();
 			connection.commit();
@@ -66,7 +68,7 @@ public class DaoUsuarioRepository {
 
 			String sql = "update model_login "
 					+ "set login=?, senha=?, nome=?, email=?, perfil=?, sexo=?, cep=?, logradouro=?, complemento=?, bairro=?, localidade=?, uf=?, numero=?, "
-					+ "cpf=?, rg=?, nascimento=?, fone_um=?, fone_dois=?"
+					+ "cpf=?, rg=?, nascimento=?, fone_um=?, fone_dois=?, salario=?"
 					+ "where id = " + modelLogin.getId() + ";";
 
 			PreparedStatement statement = connection.prepareStatement(sql);
@@ -88,6 +90,7 @@ public class DaoUsuarioRepository {
 			statement.setString(16, modelLogin.getNascimento());
 			statement.setString(17, modelLogin.getFoneUm());
 			statement.setString(18, modelLogin.getFoneDois());
+			statement.setDouble(19, modelLogin.getSalario());
 
 			statement.executeUpdate();
 			connection.commit();
@@ -151,6 +154,7 @@ public class DaoUsuarioRepository {
 			modelLogin.setNascimento(resultSet.getString("nascimento"));
 			modelLogin.setFoneUm(resultSet.getString("fone_um"));
 			modelLogin.setFoneDois(resultSet.getString("fone_dois"));
+			modelLogin.setSalario(resultSet.getDouble("salario"));
 		}
 
 		return modelLogin;
@@ -188,6 +192,7 @@ public class DaoUsuarioRepository {
 			modelLogin.setNascimento(resultSet.getString("nascimento"));
 			modelLogin.setFoneUm(resultSet.getString("fone_um"));
 			modelLogin.setFoneDois(resultSet.getString("fone_dois"));
+			modelLogin.setSalario(resultSet.getDouble("salario"));
 		}
 
 		return modelLogin;
@@ -225,6 +230,7 @@ public class DaoUsuarioRepository {
 			modelLogin.setNascimento(resultSet.getString("nascimento"));
 			modelLogin.setFoneUm(resultSet.getString("fone_um"));
 			modelLogin.setFoneDois(resultSet.getString("fone_dois"));
+			modelLogin.setSalario(resultSet.getDouble("salario"));
 		}
 
 		return modelLogin;
@@ -265,6 +271,7 @@ public class DaoUsuarioRepository {
 			modelLogin.setNascimento(resultSet.getString("nascimento"));
 			modelLogin.setFoneUm(resultSet.getString("fone_um"));
 			modelLogin.setFoneDois(resultSet.getString("fone_dois"));
+			modelLogin.setSalario(resultSet.getDouble("salario"));
 		}
 
 		return modelLogin;
