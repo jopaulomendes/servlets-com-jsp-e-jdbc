@@ -151,6 +151,18 @@ public class ServletUsuarioController extends ServletGenericUtils {
 				request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
 			}
 			
+			else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("imprimirRelatorioUsuario")) {
+				
+				String dataInicial = request.getParameter("dataInicial");
+				String dataFinal = request.getParameter("dataFinal");
+				
+				System.out.println(dataInicial + dataFinal);
+				
+				request.setAttribute("dataInicial", dataInicial);
+				request.setAttribute("dataFinal", dataFinal);
+				request.getRequestDispatcher("principal/relatorio-usuario.jsp").forward(request, response);
+			}
+			
 			else {
 				List<ModelLogin> logins = usuarioRepository.consultaUsuarioList(this.getUsuarioLogado(request));
 				

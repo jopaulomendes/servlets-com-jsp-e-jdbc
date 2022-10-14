@@ -63,7 +63,10 @@
 															<td><c:out value="${lists.nome }"></c:out></td>
 															<td><c:out value="${lists.email }"></c:out></td>
 															<td>
-																<a class="btn btn-info" href="<%=request.getContextPath()%>/ServletUsuarioController?acao=buscarEditar&id=${lists.id }">Detalhar</a>
+																<a class="btn btn-info" 
+																	href="<%=request.getContextPath()%>/ServletUsuarioController?acao=buscarEditar&id=${lists.id }">
+																	Detalhar
+																</a>
 															</td>
 														</tr>
 													</c:forEach>

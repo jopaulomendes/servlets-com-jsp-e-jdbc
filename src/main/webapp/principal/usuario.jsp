@@ -790,18 +790,19 @@
 			window.location.href = urlAction + '?acao=buscarEditar&id='+id;
 		}
 		
+       // Não permite digitos
+		$("#cpf").keypress(function (event) {
+			return /\d/.test(String.fromCharCode(event.keyCode));
+		});		
 		$("#cep").keypress(function (event) {
 			return /\d/.test(String.fromCharCode(event.keyCode));
-		});
-		
+		});		
 		$("#numero").keypress(function (event) {
 			return /\d/.test(String.fromCharCode(event.keyCode));
-		});
-		
+		});		
 		$("#foneUm").keypress(function (event) {
 			return /\d/.test(String.fromCharCode(event.keyCode));
-		});
-		
+		});		
 		$("#foneDois").keypress(function (event) {
 			return /\d/.test(String.fromCharCode(event.keyCode));
 		});
@@ -817,9 +818,26 @@
 			    nextText: 'Próximo',
 			    prevText: 'Anterior'
 				});
-			} );
+			});
 		
 		$("#salario").maskMoney({showSymbol:true, symbol:"R$ ", decimal:",", thousands:"."});
+		
+		const formatter = new Intl.NumberFormat('pt-BR', {
+			currency : 'BRL', 
+			minimumFractionDigits : 2
+		});
+		
+		$("#salario").val(formatter.format($("#salario").val()));
+		
+		$(document).ready(function(){
+		    $('#foneUm').mask('(00) 0000-0000');
+		    $('#foneDois').mask('(00) 0000-0000');
+		    $('#cpf').mask('000.000.000-00', {reverse: true});
+		});
+
+		
+// 		$("#salario").focus();
+		
 	</script>
 </body>
 

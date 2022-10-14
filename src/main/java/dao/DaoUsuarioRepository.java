@@ -556,6 +556,22 @@ public class DaoUsuarioRepository {
 		
 		return pagina.intValue();
 	}
+	
+	//TODO: implementar verificação de CPF
+	
+//	public boolean existeCpf(String cpf, Long id) throws Exception {
+//		
+//		String sql = "select count(1) > 0 as existe from model_login ml where id = ? and cpf = ?";
+//		
+//		PreparedStatement statement = connection.prepareStatement(sql);
+//		statement.setLong(1, id);
+//		statement.setString(2, cpf);
+//		
+//		ResultSet resultSet = statement.executeQuery();
+//		resultSet.next();
+//		
+//		return resultSet.getBoolean("existe");
+//	}
 }
 
 
