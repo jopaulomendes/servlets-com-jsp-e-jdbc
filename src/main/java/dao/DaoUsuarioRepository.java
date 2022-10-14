@@ -288,7 +288,7 @@ public class DaoUsuarioRepository {
 		return resultSet.getBoolean("existe");
 	}
 
-	//	pesquisar por nome
+	//	pesquisar todos por nome
 	public List<ModelLogin> pesquisar(String nome, Long usuarioLogado) throws Exception {
 
 		ModelLogin modelLogin = new ModelLogin();
@@ -318,7 +318,7 @@ public class DaoUsuarioRepository {
 		return list;
 	}
 	
-//	pesquisar por nome
+	//	pesquisar por nome paginado
 	public int pesquisarListaPaginada(String nome, Long usuarioLogado) throws Exception {
 
 		String sql = "select count(1) as total from model_login where lower(nome) like lower(?) and useradmin is false and usuario_id = ?";
@@ -482,12 +482,12 @@ public class DaoUsuarioRepository {
 		return logins;
 	}
 	
-	//TODO: verificar se precisa fazer
-		public List<ModelLogin> consultaUsuarioList(Long usuarioLogado) throws Exception {
+		//Lista todos usuáios para relatório
+		public List<ModelLogin> consultaUsuarioListRelatorio(Long usuarioLogado) throws Exception {
 			
 			List<ModelLogin> logins = new ArrayList<ModelLogin>();
 
-			String sql = "select * from model_login where useradmin is false and usuario_id = " + usuarioLogado + " limit 5" ;
+			String sql = "select * from model_login where useradmin is false and usuario_id = " + usuarioLogado;
 			
 			PreparedStatement statement = connection.prepareStatement(sql);
 
@@ -509,6 +509,34 @@ public class DaoUsuarioRepository {
 
 			return logins;
 		}
+		
+		//Lista todos usuáios limitando por 5 por usuário logado
+	public List<ModelLogin> consultaUsuarioList(Long usuarioLogado) throws Exception {
+		
+		List<ModelLogin> logins = new ArrayList<ModelLogin>();
+
+		String sql = "select * from model_login where useradmin is false and usuario_id = " + usuarioLogado + " limit 5" ;
+		
+		PreparedStatement statement = connection.prepareStatement(sql);
+
+		ResultSet resultSet = statement.executeQuery();
+
+		while (resultSet.next()) {
+			ModelLogin modelLogin = new ModelLogin();
+			
+			modelLogin.setId(resultSet.getLong("id"));
+			modelLogin.setNome(resultSet.getString("nome"));
+			modelLogin.setEmail(resultSet.getString("email"));
+			modelLogin.setLogin(resultSet.getString("login"));
+//						modelLogin.setSenha(resultSet.getString("senha"));
+			modelLogin.setPerfil(resultSet.getString("perfil"));
+			modelLogin.setSexo(resultSet.getString("sexo"));
+
+			logins.add(modelLogin);
+		}
+
+		return logins;
+	}
 	
 	public List<ModelLogin> consultaUsuarioListPaginada(Long usuarioLogado, Integer offset) throws Exception {
 			

@@ -156,7 +156,9 @@ public class ServletUsuarioController extends ServletGenericUtils {
 				String dataInicial = request.getParameter("dataInicial");
 				String dataFinal = request.getParameter("dataFinal");
 				
-				System.out.println(dataInicial + dataFinal);
+				if (dataInicial == null || dataInicial.isEmpty() && dataFinal == null || dataFinal.isEmpty()) {
+					request.setAttribute("listarUsuariosRelatorio", usuarioRepository.consultaUsuarioListRelatorio(super.getUsuarioLogado(request)));
+				}
 				
 				request.setAttribute("dataInicial", dataInicial);
 				request.setAttribute("dataFinal", dataFinal);

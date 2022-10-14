@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -83,7 +85,32 @@
 															</div>
 															<br>
 															<button type="submit" class="btn btn-primary">Imprimir</button>
+															<br>
+															<br>
 														</form>
+														
+														<!-- Lista usuário -->
+														<table 
+															class="table table-bordered"
+															id="tabelaresultadosview"
+														>
+														<thead>
+															<tr>
+																<th scope="col">Código</th>
+																<th scope="col">Nome</th>
+																<th scope="col">E-mail</th>
+															</tr>
+														</thead>
+														<tbody>
+															<c:forEach items="${listarUsuariosRelatorio}" var="lists">
+																<tr>
+																	<td><c:out value="${lists.id }"></c:out></td>
+																	<td><c:out value="${lists.nome }"></c:out></td>
+																	<td><c:out value="${lists.email }"></c:out></td>
+																</tr>
+															</c:forEach>
+														</tbody>
+													</table>
 													</div>
 												</div>
 											</div>											
