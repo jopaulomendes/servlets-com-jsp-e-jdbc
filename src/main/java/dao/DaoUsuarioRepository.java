@@ -510,33 +510,63 @@ public class DaoUsuarioRepository {
 			return logins;
 		}
 		
-		//Lista todos usuáios limitando por 5 por usuário logado
-	public List<ModelLogin> consultaUsuarioList(Long usuarioLogado) throws Exception {
-		
-		List<ModelLogin> logins = new ArrayList<ModelLogin>();
-
-		String sql = "select * from model_login where useradmin is false and usuario_id = " + usuarioLogado + " limit 5" ;
-		
-		PreparedStatement statement = connection.prepareStatement(sql);
-
-		ResultSet resultSet = statement.executeQuery();
-
-		while (resultSet.next()) {
-			ModelLogin modelLogin = new ModelLogin();
+		//Consulta Usuário por intervalo de data
+		public List<ModelLogin> consultaUsuarioLDataRelatorio(Long usuarioLogado, String dataInicial, String dataFinal) throws Exception {
 			
-			modelLogin.setId(resultSet.getLong("id"));
-			modelLogin.setNome(resultSet.getString("nome"));
-			modelLogin.setEmail(resultSet.getString("email"));
-			modelLogin.setLogin(resultSet.getString("login"));
+			List<ModelLogin> logins = new ArrayList<ModelLogin>();
+
+			String sql = "select * from model_login where useradmin is false and usuario_id = " + usuarioLogado + " and nascimento >= ? and nascimento <= ?";
+			
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setString(1, dataInicial);
+			statement.setString(2, dataFinal);
+
+			ResultSet resultSet = statement.executeQuery();
+
+			while (resultSet.next()) {
+				ModelLogin modelLogin = new ModelLogin();
+				
+				modelLogin.setId(resultSet.getLong("id"));
+				modelLogin.setNome(resultSet.getString("nome"));
+				modelLogin.setEmail(resultSet.getString("email"));
+				modelLogin.setLogin(resultSet.getString("login"));
 //						modelLogin.setSenha(resultSet.getString("senha"));
-			modelLogin.setPerfil(resultSet.getString("perfil"));
-			modelLogin.setSexo(resultSet.getString("sexo"));
+				modelLogin.setPerfil(resultSet.getString("perfil"));
+				modelLogin.setSexo(resultSet.getString("sexo"));
 
-			logins.add(modelLogin);
+				logins.add(modelLogin);
+			}
+
+			return logins;
 		}
-
-		return logins;
-	}
+		
+		//Lista todos usuáios limitando por 5 por usuário logado
+		public List<ModelLogin> consultaUsuarioList(Long usuarioLogado) throws Exception {
+			
+			List<ModelLogin> logins = new ArrayList<ModelLogin>();
+	
+			String sql = "select * from model_login where useradmin is false and usuario_id = " + usuarioLogado + " limit 5" ;
+			
+			PreparedStatement statement = connection.prepareStatement(sql);
+	
+			ResultSet resultSet = statement.executeQuery();
+	
+			while (resultSet.next()) {
+				ModelLogin modelLogin = new ModelLogin();
+				
+				modelLogin.setId(resultSet.getLong("id"));
+				modelLogin.setNome(resultSet.getString("nome"));
+				modelLogin.setEmail(resultSet.getString("email"));
+				modelLogin.setLogin(resultSet.getString("login"));
+	//						modelLogin.setSenha(resultSet.getString("senha"));
+				modelLogin.setPerfil(resultSet.getString("perfil"));
+				modelLogin.setSexo(resultSet.getString("sexo"));
+	
+				logins.add(modelLogin);
+			}
+	
+			return logins;
+		}
 	
 	public List<ModelLogin> consultaUsuarioListPaginada(Long usuarioLogado, Integer offset) throws Exception {
 			
