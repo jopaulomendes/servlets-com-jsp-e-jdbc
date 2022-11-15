@@ -494,13 +494,14 @@ public class DaoUsuarioRepository {
 			ResultSet resultSet = statement.executeQuery();
 
 			while (resultSet.next()) {
-				ModelLogin modelLogin = new ModelLogin();
 				
+				ModelLogin modelLogin = new ModelLogin();				
 				modelLogin.setId(resultSet.getLong("id"));
 				modelLogin.setNome(resultSet.getString("nome"));
 				modelLogin.setEmail(resultSet.getString("email"));
 				modelLogin.setNascimento(resultSet.getString("nascimento"));
 				modelLogin.setCpf(resultSet.getString("cpf"));
+				modelLogin.setFoneUm(resultSet.getString("fone_um"));
 
 				logins.add(modelLogin);
 			}

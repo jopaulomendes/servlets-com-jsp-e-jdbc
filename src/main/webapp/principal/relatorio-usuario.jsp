@@ -100,6 +100,12 @@
 																		class="btn btn-primary">
 																		Imprimir PDF
 																	</button>
+																	<button 
+																		type="button" 
+																		onclick="imprimirExcel();"
+																		class="btn btn-primary">
+																		Imprimir Excel
+																	</button>
 																</div>
 															</div>
 															<br>
@@ -159,6 +165,12 @@
     
     function imprimirPdf() {
 		document.getElementById("acaoRelatorioImprimir").value = 'imprimirRelatorioPdf';
+		$("#formUsuario").submit();
+		return false;
+	}
+    
+    function imprimirExcel() {
+		document.getElementById("acaoRelatorioImprimir").value = 'imprimirRelatorioExcel';
 		$("#formUsuario").submit();
 		return false;
 	}
