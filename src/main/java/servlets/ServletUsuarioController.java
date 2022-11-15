@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 import model.ModelLogin;
+import util.ReportUtil;
 
 //@WebServlet(urlPatterns = {"ServletUsuarioController"})
 @MultipartConfig
@@ -136,7 +137,7 @@ public class ServletUsuarioController extends ServletGenericUtils {
 				
 				if (modelLogin.getFoto() != null && !modelLogin.getFoto().isEmpty()) {
 					response.setHeader("Content-Disposition", "attachment;filename=arquivo." + modelLogin.getFotoextensao());
-					 response.getOutputStream().write(new Base64().decodeBase64(modelLogin.getFoto().split("\\,")[1]));
+					response.getOutputStream().write(new Base64().decodeBase64(modelLogin.getFoto().split("\\,")[1]));
 				}
 			}
 			
@@ -151,6 +152,7 @@ public class ServletUsuarioController extends ServletGenericUtils {
 				request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
 			}
 			
+			//listar relatório de usuário
 			else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("imprimirRelatorioUsuario")) {
 				
 				String dataInicial = request.getParameter("dataInicial");
@@ -167,6 +169,27 @@ public class ServletUsuarioController extends ServletGenericUtils {
 				request.setAttribute("dataInicial", dataInicial);
 				request.setAttribute("dataFinal", dataFinal);
 				request.getRequestDispatcher("principal/relatorio-usuario.jsp").forward(request, response);
+			}
+			
+			//imprimir pdf
+			else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("imprimirRelatorioPdf")) {
+				
+				String dataInicial = request.getParameter("dataInicial");
+				String dataFinal = request.getParameter("dataFinal");
+				
+				List<ModelLogin> logins = null;
+				
+				if (dataInicial == null || dataInicial.isEmpty() 
+						&& dataFinal == null || dataFinal.isEmpty()) {
+					logins = usuarioRepository.consultaUsuarioListRelatorio(super.getUsuarioLogado(request));
+				} else {
+					logins = usuarioRepository.consultaUsuarioLDataRelatorio(super.getUsuarioLogado(request), dataInicial, dataFinal);
+				}
+				
+				byte[] relatorio = new ReportUtil().gerarRelatorioPdf(logins, "relatorio-usuario", request.getServletContext());
+				
+				response.setHeader("Content-Disposition", "attachment;filename=arquivo.pdf");
+				response.getOutputStream().write(relatorio);
 			}
 			
 			else {

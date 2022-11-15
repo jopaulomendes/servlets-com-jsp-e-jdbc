@@ -52,11 +52,16 @@
 															class="form-material"															
 															action="<%=request.getContextPath()%>/ServletUsuarioController"
 															method="get" 
-															id="formUser"
+															id="formUsuario"
 														>
-															<input type="hidden" name="acao" value="imprimirRelatorioUsuario">
-															<div class="row">
-																<div class="col">																
+															<input 
+																id="acaoRelatorioImprimir" 
+																type="hidden" 
+																name="acao" 
+																value="imprimirRelatorioUsuario"
+															>
+															<div class="form-row align-items-center">
+																<div class="col-sm-3 my-1">																
 																	<label for="exampleInputEmail1">
 																		Data Inicial
 																	</label> 
@@ -69,7 +74,7 @@
 																		value="${dataInicial}"
 																	> 
 																</div>
-																<div class="col">																	
+																<div class="col-sm-3 my-1">																	
 																	<label for="exampleInputEmail1">
 																		Data Final
 																	</label> 
@@ -82,10 +87,21 @@
 																		value="${dataFinal}"
 																	> 
 																</div>
+																<div class="col-auto my-1">
+																	<button 
+																		type="button" 
+																		onclick="imprimirHtml();"
+																		class="btn btn-primary">
+																		Listar Relatório
+																	</button>
+																	<button 
+																		type="button" 
+																		onclick="imprimirPdf();"
+																		class="btn btn-primary">
+																		Imprimir PDF
+																	</button>
+																</div>
 															</div>
-															<br>
-															<button type="submit" class="btn btn-primary">Imprimir</button>
-															<br>
 															<br>
 														</form>
 														
@@ -99,6 +115,8 @@
 																<th scope="col">Código</th>
 																<th scope="col">Nome</th>
 																<th scope="col">E-mail</th>
+																<th scope="col">CPF</th>
+																<th scope="col">Data de Nascimento</th>
 															</tr>
 														</thead>
 														<tbody>
@@ -107,6 +125,8 @@
 																	<td><c:out value="${lists.id }"></c:out></td>
 																	<td><c:out value="${lists.nome }"></c:out></td>
 																	<td><c:out value="${lists.email }"></c:out></td>
+																	<td><c:out value="${lists.cpf }"></c:out></td>
+																	<td><c:out value="${lists.nascimento }"></c:out></td>
 																</tr>
 															</c:forEach>
 														</tbody>
@@ -131,6 +151,17 @@
     <jsp:include page="javascript.jsp"></jsp:include>
     
     <script type="text/javascript">
+    
+    function imprimirHtml() {
+		document.getElementById("acaoRelatorioImprimir").value = 'imprimirRelatorioUsuario';
+		$("#formUsuario").submit();
+	}
+    
+    function imprimirPdf() {
+		document.getElementById("acaoRelatorioImprimir").value = 'imprimirRelatorioPdf';
+		$("#formUsuario").submit();
+		return false;
+	}
     
     $( function() {			  
 	  $("#dataInicial").datepicker({

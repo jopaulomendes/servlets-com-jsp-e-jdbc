@@ -499,10 +499,8 @@ public class DaoUsuarioRepository {
 				modelLogin.setId(resultSet.getLong("id"));
 				modelLogin.setNome(resultSet.getString("nome"));
 				modelLogin.setEmail(resultSet.getString("email"));
-				modelLogin.setLogin(resultSet.getString("login"));
-//				modelLogin.setSenha(resultSet.getString("senha"));
-				modelLogin.setPerfil(resultSet.getString("perfil"));
-				modelLogin.setSexo(resultSet.getString("sexo"));
+				modelLogin.setNascimento(resultSet.getString("nascimento"));
+				modelLogin.setCpf(resultSet.getString("cpf"));
 
 				logins.add(modelLogin);
 			}
@@ -529,10 +527,8 @@ public class DaoUsuarioRepository {
 				modelLogin.setId(resultSet.getLong("id"));
 				modelLogin.setNome(resultSet.getString("nome"));
 				modelLogin.setEmail(resultSet.getString("email"));
-				modelLogin.setLogin(resultSet.getString("login"));
-//						modelLogin.setSenha(resultSet.getString("senha"));
-				modelLogin.setPerfil(resultSet.getString("perfil"));
-				modelLogin.setSexo(resultSet.getString("sexo"));
+				modelLogin.setNascimento(resultSet.getString("nascimento"));
+				modelLogin.setCpf(resultSet.getString("cpf"));
 
 				logins.add(modelLogin);
 			}
