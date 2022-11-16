@@ -44,7 +44,7 @@
 												<div class="card">
 													
 													<div class="card-header">
-														<h2>Relatório de Usuários</h2>
+														<h2>Gráfico de Salário dos Usuários</h2>
 													</div>
 													
 													<div class="card-block">
@@ -90,56 +90,17 @@
 																<div class="col-auto my-1">
 																	<button 
 																		type="button" 
-																		onclick="imprimirHtml();"
+																		onclick="gerarGrafico();"
 																		class="btn btn-primary">
-																		Listar Relatório
-																	</button>
-																	<button 
-																		type="button" 
-																		onclick="imprimirPdf();"
-																		class="btn btn-primary">
-																		Imprimir PDF
-																	</button>
-																	<button 
-																		type="button" 
-																		onclick="imprimirExcel();"
-																		class="btn btn-primary">
-																		Imprimir Excel
+																		Gerar Gráfico
 																	</button>
 																</div>
 															</div>
 															<br>
-														</form>
-														
-														<!-- Lista usuário -->
-														<div style="height: 450px; overflow: scroll;">
-															<table 
-															class="table table-bordered"
-															id="tabelaresultadosview"
-														>
-														<thead>
-															<tr>
-																<th scope="col">Código</th>
-																<th scope="col">Nome</th>
-																<th scope="col">E-mail</th>
-																<th scope="col">CPF</th>
-																<th scope="col">Data de Nascimento</th>
-															</tr>
-														</thead>
-														<tbody>
-															<c:forEach items="${listarUsuariosRelatorio}" var="lists">
-																<tr>
-																	<td><c:out value="${lists.id }"></c:out></td>
-																	<td><c:out value="${lists.nome }"></c:out></td>
-																	<td><c:out value="${lists.email }"></c:out></td>
-																	<td><c:out value="${lists.cpf }"></c:out></td>
-																	<td><c:out value="${lists.nascimento }"></c:out></td>
-																</tr>
-															</c:forEach>
-														</tbody>
-													</table>
-														</div>
-														
+														</form>															
+														<div>
+													  		<canvas id="myChart"></canvas>
+														</div>															
 													</div>
 												</div>
 											</div>											
@@ -157,26 +118,82 @@
         </div>
     </div>
     
+    
     <jsp:include page="javascript.jsp"></jsp:include>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <script type="text/javascript">
     
-    function imprimirHtml() {
-		document.getElementById("acaoRelatorioImprimir").value = 'imprimirRelatorioUsuario';
-		$("#formUsuario").submit();
-	}
-    
-    function imprimirPdf() {
-		document.getElementById("acaoRelatorioImprimir").value = 'imprimirRelatorioPdf';
-		$("#formUsuario").submit();
-		return false;
-	}
-    
-    function imprimirExcel() {
-		document.getElementById("acaoRelatorioImprimir").value = 'imprimirRelatorioExcel';
-		$("#formUsuario").submit();
-		return false;
-	}
+//     var myChart = new Chart(document.getElementById('myChart'));
+
+    function gerarGrafico() {
+    	
+    	alert("Gerar gráfico");
+    	
+    	myChart = new Chart(
+		    document.getElementById('myChart'),
+		    {
+			  type: 'line',
+			  data: {
+			      labels: [
+			    	  'Janeiro',
+			    	  'Fevereiro',
+			    	  'Março',
+			    	  'Abril',
+			    	  'Maio',
+			    	  'Junho',
+			      ],
+			      datasets: [{
+			        label: 'Gráfico de média salarial por tipo',
+			        backgroundColor: 'rgb(255, 99, 132)',
+			        borderColor: 'rgb(255, 99, 132)',
+			        data: [0, 10. 5, 2, 20, 30, 45],
+			      }]
+			    },
+			  options: {}
+			}
+		);
+        
+// 	     var urlAction = document.getElementById('formUser').action;
+// 	     var dataInicial = document.getElementById('dataInicial').value;
+// 	     var dataFinal = document.getElementById('dataFinal').value;
+	     
+// 		 $.ajax({		     
+		    
+// 			 method: "get",
+// 		     url : urlAction,
+// 		     data : "dataInicial=" + dataInicial + '&dataFinal=' + dataFinal + '&acao=graficoSalario',
+		     
+// 		     success: function (response) {
+			 
+// 	   			var json = JSON.parse(response);
+				    
+// 			    myChart.destroy();
+				
+// 			    myChart = new Chart(
+// 				    document.getElementById('myChart'),
+// 				    {
+// 					  type: 'line',
+// 					  data: {
+// 					      labels: json.perfils,
+// 					      datasets: [{
+// 					        label: 'Gr�fico de m�dia salarial por tipo',
+// 					        backgroundColor: 'rgb(255, 99, 132)',
+// 					        borderColor: 'rgb(255, 99, 132)',
+// 					        data: json.salarios,
+// 					      }]
+// 					    },
+// 					  options: {}
+// 					}
+// 				);
+			  
+// 	     	}
+		     
+// 		 }).fail(function(xhr, status, errorThrown){
+// 		    alert('Erro ao buscar dados para o grafico ' + xhr.responseText);
+// 		 });
+    }
     
     $( function() {			  
 	  $("#dataInicial").datepicker({
