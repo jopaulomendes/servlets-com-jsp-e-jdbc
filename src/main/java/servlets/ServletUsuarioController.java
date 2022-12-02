@@ -10,6 +10,7 @@ import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dao.DaoUsuarioRepository;
+import dto.DtoGraficoSalarioUsuario;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -65,12 +66,13 @@ public class ServletUsuarioController extends ServletGenericUtils {
 				 
 				 List<ModelLogin> dadosJsonUser =  usuarioRepository.consultaUsuarioList(nomeBusca, super.getUsuarioLogado(request));
 				 
+//				 cria objeto maper
 				 ObjectMapper mapper = new ObjectMapper();
-				 
+//				 converte em json
 				 String json = mapper.writeValueAsString(dadosJsonUser);
 				 
 				 response.addHeader("totalPagina", ""+ usuarioRepository.pesquisarUsuarioListaPaginacao(nomeBusca, super.getUsuarioLogado(request)));
-				 response.getWriter().write(json);
+				 response.getWriter().write(json); //retorna pra tela	
 				 
 			 }
 			
@@ -201,6 +203,26 @@ public class ServletUsuarioController extends ServletGenericUtils {
 				
 				response.setHeader("Content-Disposition", "attachment;filename=arquivo." + extensao);
 				response.getOutputStream().write(relatorio);
+			}
+			
+//			Gráfico do salário
+			else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("graficoSalario")) {
+				String dataInicial = request.getParameter("dataInicial");
+				String dataFinal = request.getParameter("dataFinal");				
+				
+				if (dataInicial == null || dataInicial.isEmpty() 
+						&& dataFinal == null || dataFinal.isEmpty()) {
+					
+					DtoGraficoSalarioUsuario salarioUsuario = 
+							usuarioRepository.graficoMediaSalario(super.getUsuarioLogado(request));
+					
+					ObjectMapper mapper = new ObjectMapper();
+					String json = mapper.writeValueAsString(salarioUsuario);
+					response.getWriter().write(json);
+				} else {
+					
+				}
+				
 			}
 			
 			else {

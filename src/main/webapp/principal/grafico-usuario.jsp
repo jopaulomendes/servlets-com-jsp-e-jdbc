@@ -127,9 +127,45 @@
     
 //     var myChart = new Chart(document.getElementById('myChart'));
 
-    function gerarGrafico() {
-    	
+    function gerarGrafico() {    	
     	alert("Gerar gráfico");
+    	
+	     var urlAction = document.getElementById('formUsuario').action;
+	     var dataInicial = document.getElementById('dataInicial').value;
+	     var dataFinal = document.getElementById('dataFinal').value;
+	     
+		 $.ajax({		    
+			 method: "get",
+		     url : urlAction,
+		     data : "dataInicial=" +dataInicial+ '&dataFinal=' +dataFinal+ '&acao=graficoSalario',		     
+		     success: function (response) {
+		    	 
+	   			var json = JSON.parse(response); // pega uma string json e passar o valor para JS
+		    	alert(json);	 
+				    
+// 			    myChart.destroy();
+				
+			    myChart = new Chart(
+				    document.getElementById('myChart'),
+				    {
+					  type: 'line',
+					  data: {
+					      labels: json.perfils,
+					      datasets: [{
+					        label: 'Gráfico de média salarial por tipo',
+					        backgroundColor: 'rgb(255, 99, 132)',
+					        borderColor: 'rgb(255, 99, 132)',
+					        data: json.salarios,
+					      }]
+					    },
+					  options: {}
+					}
+				);
+			  
+	     	}		     
+		 }).fail(function(xhr, status, errorThrown){
+		    alert('Erro ao buscar dados para o grafico ' + xhr.responseText);
+		 });
     	
     	myChart = new Chart(
 		    document.getElementById('myChart'),
@@ -154,45 +190,6 @@
 			  options: {}
 			}
 		);
-        
-// 	     var urlAction = document.getElementById('formUser').action;
-// 	     var dataInicial = document.getElementById('dataInicial').value;
-// 	     var dataFinal = document.getElementById('dataFinal').value;
-	     
-// 		 $.ajax({		     
-		    
-// 			 method: "get",
-// 		     url : urlAction,
-// 		     data : "dataInicial=" + dataInicial + '&dataFinal=' + dataFinal + '&acao=graficoSalario',
-		     
-// 		     success: function (response) {
-			 
-// 	   			var json = JSON.parse(response);
-				    
-// 			    myChart.destroy();
-				
-// 			    myChart = new Chart(
-// 				    document.getElementById('myChart'),
-// 				    {
-// 					  type: 'line',
-// 					  data: {
-// 					      labels: json.perfils,
-// 					      datasets: [{
-// 					        label: 'Gr�fico de m�dia salarial por tipo',
-// 					        backgroundColor: 'rgb(255, 99, 132)',
-// 					        borderColor: 'rgb(255, 99, 132)',
-// 					        data: json.salarios,
-// 					      }]
-// 					    },
-// 					  options: {}
-// 					}
-// 				);
-			  
-// 	     	}
-		     
-// 		 }).fail(function(xhr, status, errorThrown){
-// 		    alert('Erro ao buscar dados para o grafico ' + xhr.responseText);
-// 		 });
     }
     
     $( function() {			  
