@@ -125,95 +125,72 @@
     
     <script type="text/javascript">
     
-//     var myChart = new Chart(document.getElementById('myChart'));
-
-    function gerarGrafico() {    	
-    	alert("Gerar gráfico");
-    	
-	     var urlAction = document.getElementById('formUsuario').action;
-	     var dataInicial = document.getElementById('dataInicial').value;
-	     var dataFinal = document.getElementById('dataFinal').value;
-	     
-		 $.ajax({		    
-			 method: "get",
-		     url : urlAction,
-		     data : "dataInicial=" +dataInicial+ '&dataFinal=' +dataFinal+ '&acao=graficoSalario',		     
-		     success: function (response) {
-		    	 
-	   			var json = JSON.parse(response); // pega uma string json e passar o valor para JS
-		    	alert(json);	 
-				    
-// 			    myChart.destroy();
-				
-			    myChart = new Chart(
-				    document.getElementById('myChart'),
-				    {
-					  type: 'line',
-					  data: {
-					      labels: json.perfils,
-					      datasets: [{
-					        label: 'Gráfico de média salarial por tipo',
-					        backgroundColor: 'rgb(255, 99, 132)',
-					        borderColor: 'rgb(255, 99, 132)',
-					        data: json.salarios,
-					      }]
-					    },
-					  options: {}
-					}
-				);
-			  
-	     	}		     
-		 }).fail(function(xhr, status, errorThrown){
-		    alert('Erro ao buscar dados para o grafico ' + xhr.responseText);
-		 });
-    	
-    	myChart = new Chart(
-		    document.getElementById('myChart'),
-		    {
-			  type: 'line',
-			  data: {
-			      labels: [
-			    	  'Janeiro',
-			    	  'Fevereiro',
-			    	  'Março',
-			    	  'Abril',
-			    	  'Maio',
-			    	  'Junho',
-			      ],
-			      datasets: [{
-			        label: 'Gráfico de média salarial por tipo',
-			        backgroundColor: 'rgb(255, 99, 132)',
-			        borderColor: 'rgb(255, 99, 132)',
-			        data: [0, 10. 5, 2, 20, 30, 45],
-			      }]
-			    },
-			  options: {}
-			}
-		);
-    }
-    
-    $( function() {			  
-	  $("#dataInicial").datepicker({
-		    dateFormat: 'dd/mm/yy',
-		    dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
-		    dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
-		    dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
-		    monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
-		    monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
-		    nextText: 'Próximo',
-		    prevText: 'Anterior'
+	    myChart = new Chart(
+			    document.getElementById('myChart')		    
+			);
+	    
+	    function gerarGrafico() {    	
+	    	
+		     var urlAction = document.getElementById('formUsuario').action;
+		     var dataInicial = document.getElementById('dataInicial').value;
+		     var dataFinal = document.getElementById('dataFinal').value;
+		     
+			 $.ajax({		    
+				 method: "get",
+			     url : urlAction,
+			     data : "dataInicial=" +dataInicial+ '&dataFinal=' +dataFinal+ '&acao=graficoSalario',		     
+			     success: function (response) {
+			    	 
+		   			var json = JSON.parse(response); // pega uma string json e passar o valor para JS
+					    
+				    myChart.destroy();
+					
+				    myChart = new Chart(
+					    document.getElementById('myChart'),
+					    {
+						  type: 'line',
+						  data: {
+						      labels: json.perfils,
+						      datasets: [{
+						        label: 'Gráfico de média salarial por tipo',
+						        backgroundColor: 'rgb(255, 99, 132)',
+						        borderColor: 'rgb(255, 99, 132)',
+						        data: json.salarios,
+						      }]
+						    },
+						  options: {}
+						}
+					);
+				  
+		     	}		     
+			 }).fail(function(xhr, status, errorThrown){
+			    alert('Erro ao buscar dados para o grafico ' + xhr.responseText);
+			 });
+	    }
+	    
+	    
+	    $( function() {			  
+		  $("#dataInicial").datepicker({
+			    dateFormat: 'dd/mm/yy',
+			    dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
+			    dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
+			    dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
+			    monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+			    monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+			    nextText: 'Próximo',
+			    prevText: 'Anterior'
+			});
+		  $("#dataFinal").datepicker({
+			    dateFormat: 'dd/mm/yy',
+			    dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
+			    dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
+			    dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
+			    monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+			    monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+			    nextText: 'Próximo',
+			    prevText: 'Anterior'
+			});
 		});
-	  $("#dataFinal").datepicker({
-		    dateFormat: 'dd/mm/yy',
-		    dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
-		    dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
-		    dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
-		    monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
-		    monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
-		    nextText: 'Próximo',
-		    prevText: 'Anterior'
-		});
-	});
     
     </script>
 </body>

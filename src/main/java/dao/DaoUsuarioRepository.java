@@ -639,6 +639,34 @@ public class DaoUsuarioRepository {
 		
 		return dtoGraficoSalarioUsuario;
 	}
+
+	public DtoGraficoSalarioUsuario graficoMediaSalario(long usuarioLogado, String dataInicial, String dataFinal) throws Exception {
+		String sql = "select avg(salario) as media_salario, perfil from model_login ml where usuario_id = ? and nascimento >= ? and nascimento <= ? group by perfil";
+		PreparedStatement statement = connection.prepareStatement(sql);
+		statement.setLong(1, usuarioLogado);
+		statement.setString(2, dataInicial);
+		statement.setString(3, dataFinal);
+		
+		ResultSet resultSet = statement.executeQuery();
+		
+		List<String> perfils = new ArrayList<String>();
+		List<Double> salarios = new ArrayList<Double>();
+		
+		DtoGraficoSalarioUsuario dtoGraficoSalarioUsuario = new DtoGraficoSalarioUsuario();
+		
+		while (resultSet.next()) {
+			Double media_salario = resultSet.getDouble("media_salario");
+			String perfil = resultSet.getString("perfil");
+			
+			perfils.add(perfil);
+			salarios.add(media_salario);
+		}
+		
+		dtoGraficoSalarioUsuario.setPerfils(perfils);
+		dtoGraficoSalarioUsuario.setSalarios(salarios);
+		
+		return dtoGraficoSalarioUsuario;
+	}
 	
 	//TODO: implementar verificação de CPF
 	

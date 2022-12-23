@@ -220,7 +220,12 @@ public class ServletUsuarioController extends ServletGenericUtils {
 					String json = mapper.writeValueAsString(salarioUsuario);
 					response.getWriter().write(json);
 				} else {
+					DtoGraficoSalarioUsuario salarioUsuario = 
+							usuarioRepository.graficoMediaSalario(super.getUsuarioLogado(request), dataInicial, dataFinal);
 					
+					ObjectMapper mapper = new ObjectMapper();
+					String json = mapper.writeValueAsString(salarioUsuario);
+					response.getWriter().write(json);
 				}
 				
 			}
