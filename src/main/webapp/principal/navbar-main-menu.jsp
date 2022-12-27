@@ -6,7 +6,7 @@
 <c:set 
 	scope="session" 
 	var="perfil"
-	value='<%=request.getSession().getAttribute("perfil").toString()%>'>
+	value='<%=request.getSession().getAttribute("perfil")%>'>
 </c:set>
 
 <nav class="pcoded-navbar">
