@@ -86,7 +86,7 @@
 																			id="fotobase64"
 																			alt="Foto do usuário" 
 																			src="assets/images/Usuario.png" 
-																			width="200px"
+																			width="100px"
 																		>
 																	</c:if>
 																</div>
@@ -754,6 +754,10 @@
 			for (var p = 0; p < elementos.length; p++) {
 				elementos[p].value = '';
 			}
+			
+			var campoFoto = document.getElementById('filefoto');
+			campoFoto.value = '';
+			console.log(campoFoto);
 		}
 
 		function excluirAjax() {
